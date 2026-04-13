@@ -6,7 +6,7 @@
 -- =============================================
 -- جدول الفئات
 -- =============================================
-CREATE TABLE catalog.categories (
+CREATE TABLE IF NOT EXISTS catalog.categories (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name_ar VARCHAR(100) NOT NULL,
@@ -32,12 +32,13 @@ INSERT INTO catalog.categories (name_ar, name_en, slug, sort_order) VALUES
 ('ثياب عصرية', 'Modern Thobes', 'modern-thobes', 2),
 ('ثياب مطرزة', 'Embroidered Thobes', 'embroidered-thobes', 3),
 ('ثياب أطفال', 'Kids Thobes', 'kids-thobes', 4),
-('أقمشة', 'Fabrics', 'fabrics', 5);
+('أقمشة', 'Fabrics', 'fabrics', 5)
+ON CONFLICT (slug) DO NOTHING;
 
 -- =============================================
 -- جدول الألوان
 -- =============================================
-CREATE TABLE catalog.colors (
+CREATE TABLE IF NOT EXISTS catalog.colors (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name_ar VARCHAR(50) NOT NULL,
@@ -59,12 +60,13 @@ INSERT INTO catalog.colors (name_ar, name_en, hex_code, sort_order) VALUES
 ('بني', 'Brown', '#7C2D12', 5),
 ('أخضر', 'Green', '#166534', 6),
 ('بيج', 'Beige', '#F5F5DC', 7),
-('أسود', 'Black', '#000000', 8);
+('أسود', 'Black', '#000000', 8)
+ON CONFLICT DO NOTHING;
 
 -- =============================================
 -- جدول الأقمشة
 -- =============================================
-CREATE TABLE catalog.fabrics (
+CREATE TABLE IF NOT EXISTS catalog.fabrics (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name VARCHAR(100) NOT NULL,
@@ -107,12 +109,13 @@ INSERT INTO catalog.fabrics (name, name_ar, slug, origin_country, origin_flag, p
 ('English Wool', 'صوف إنجليزي', 'english-wool', 'England', '🇬🇧', 1200),
 ('Egyptian Cotton', 'قطن مصري', 'egyptian-cotton', 'Egypt', '🇪🇬', 950),
 ('French Linen', 'كتان فرنسي', 'french-linen', 'France', '🇫🇷', 1100),
-('Italian Silk', 'حرير إيطالي', 'italian-silk', 'Italy', '🇮🇹', 1500);
+('Italian Silk', 'حرير إيطالي', 'italian-silk', 'Italy', '🇮🇹', 1500)
+ON CONFLICT (slug) DO NOTHING;
 
 -- =============================================
 -- جدول أنواع الكول
 -- =============================================
-CREATE TABLE catalog.collar_types (
+CREATE TABLE IF NOT EXISTS catalog.collar_types (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name_ar VARCHAR(100) NOT NULL,
@@ -136,12 +139,13 @@ CREATE TABLE catalog.collar_types (
 INSERT INTO catalog.collar_types (name_ar, name_en, code, additional_price, is_default, sort_order) VALUES
 ('كلاسيكي دائري', 'Classic Round', 'COL-CLASSIC', 0, true, 1),
 ('سعودي حاد', 'Saudi Sharp', 'COL-SAUDI', 500, false, 2),
-('مفتوح بدون كول', 'Open No Collar', 'COL-OPEN', 0, false, 3);
+('مفتوح بدون كول', 'Open No Collar', 'COL-OPEN', 0, false, 3)
+ON CONFLICT (code) DO NOTHING;
 
 -- =============================================
 -- جدول أنواع الأكمام
 -- =============================================
-CREATE TABLE catalog.sleeve_types (
+CREATE TABLE IF NOT EXISTS catalog.sleeve_types (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name_ar VARCHAR(100) NOT NULL,
@@ -164,12 +168,13 @@ CREATE TABLE catalog.sleeve_types (
 INSERT INTO catalog.sleeve_types (name_ar, name_en, code, additional_price, is_default, sort_order) VALUES
 ('سرسول مفتوح', 'Open Cuff', 'SLV-OPEN', 0, true, 1),
 ('قفلات بأزرار', 'Button Cuff', 'SLV-BUTTON', 800, false, 2),
-('قفلات فرنسية', 'French Cuff', 'SLV-FRENCH', 1200, false, 3);
+('قفلات فرنسية', 'French Cuff', 'SLV-FRENCH', 1200, false, 3)
+ON CONFLICT (code) DO NOTHING;
 
 -- =============================================
 -- جدول أنواع الكبسات
 -- =============================================
-CREATE TABLE catalog.button_types (
+CREATE TABLE IF NOT EXISTS catalog.button_types (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name_ar VARCHAR(100) NOT NULL,
@@ -192,12 +197,13 @@ CREATE TABLE catalog.button_types (
 INSERT INTO catalog.button_types (name_ar, name_en, code, additional_price, is_default, sort_order) VALUES
 ('بدون كبسة', 'No Button', 'BTN-NONE', 0, true, 1),
 ('كبسة واحدة', 'Single Button', 'BTN-SINGLE', 300, false, 2),
-('كبستين', 'Double Button', 'BTN-DOUBLE', 500, false, 3);
+('كبستين', 'Double Button', 'BTN-DOUBLE', 500, false, 3)
+ON CONFLICT (code) DO NOTHING;
 
 -- =============================================
 -- جدول المقاسات القياسية
 -- =============================================
-CREATE TABLE catalog.standard_sizes (
+CREATE TABLE IF NOT EXISTS catalog.standard_sizes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     size_number INTEGER NOT NULL UNIQUE, -- 52, 54, 56, etc.
@@ -218,12 +224,13 @@ INSERT INTO catalog.standard_sizes (size_number, measurements, sort_order) VALUE
 (56, ROW(150, 112, 50, 64, 42, 26)::core.measurements_type, 3),
 (58, ROW(155, 116, 52, 66, 44, 27)::core.measurements_type, 4),
 (60, ROW(160, 120, 54, 68, 46, 28)::core.measurements_type, 5),
-(62, ROW(165, 124, 56, 70, 48, 29)::core.measurements_type, 6);
+(62, ROW(165, 124, 56, 70, 48, 29)::core.measurements_type, 6)
+ON CONFLICT (size_number) DO NOTHING;
 
 -- =============================================
 -- جدول المنتجات (القميص)
 -- =============================================
-CREATE TABLE catalog.products (
+CREATE TABLE IF NOT EXISTS catalog.products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- المعلومات الأساسية
@@ -282,15 +289,15 @@ CREATE TABLE catalog.products (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_products_category ON catalog.products(category_id);
-CREATE INDEX idx_products_status ON catalog.products(status);
-CREATE INDEX idx_products_featured ON catalog.products(is_featured) WHERE is_featured = true;
-CREATE INDEX idx_products_slug ON catalog.products(slug);
+CREATE INDEX IF NOT EXISTS idx_products_category ON catalog.products(category_id);
+CREATE INDEX IF NOT EXISTS idx_products_status ON catalog.products(status);
+CREATE INDEX IF NOT EXISTS idx_products_featured ON catalog.products(is_featured) WHERE is_featured = true;
+CREATE INDEX IF NOT EXISTS idx_products_slug ON catalog.products(slug);
 
 -- =============================================
 -- جدول المخزون
 -- =============================================
-CREATE TABLE catalog.inventory (
+CREATE TABLE IF NOT EXISTS catalog.inventory (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     product_id UUID NOT NULL REFERENCES catalog.products(id) ON DELETE CASCADE,
@@ -314,8 +321,8 @@ CREATE TABLE catalog.inventory (
     UNIQUE(product_id, fabric_id, color_id, size_id)
 );
 
-CREATE INDEX idx_inventory_product ON catalog.inventory(product_id);
-CREATE INDEX idx_inventory_level ON catalog.inventory(stock_level);
+CREATE INDEX IF NOT EXISTS idx_inventory_product ON catalog.inventory(product_id);
+CREATE INDEX IF NOT EXISTS idx_inventory_level ON catalog.inventory(stock_level);
 
 -- =============================================
 -- Trigger لتحديث مستوى المخزون
