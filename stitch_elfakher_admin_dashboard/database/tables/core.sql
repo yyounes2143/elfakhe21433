@@ -6,7 +6,7 @@
 -- =============================================
 -- جدول المستخدمين (زبائن ومدراء)
 -- =============================================
-CREATE TABLE core.users (
+CREATE TABLE IF NOT EXISTS core.users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- المعلومات الأساسية
@@ -39,15 +39,15 @@ CREATE TABLE core.users (
 );
 
 -- فهارس للبحث السريع
-CREATE INDEX idx_users_phone ON core.users(phone);
-CREATE INDEX idx_users_email ON core.users(email);
-CREATE INDEX idx_users_role ON core.users(role);
-CREATE INDEX idx_users_created ON core.users(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_users_phone ON core.users(phone);
+CREATE INDEX IF NOT EXISTS idx_users_email ON core.users(email);
+CREATE INDEX IF NOT EXISTS idx_users_role ON core.users(role);
+CREATE INDEX IF NOT EXISTS idx_users_created ON core.users(created_at DESC);
 
 -- =============================================
 -- جدول عناوين المستخدمين
 -- =============================================
-CREATE TABLE core.user_addresses (
+CREATE TABLE IF NOT EXISTS core.user_addresses (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES core.users(id) ON DELETE CASCADE,
     
@@ -66,12 +66,12 @@ CREATE TABLE core.user_addresses (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_addresses_user ON core.user_addresses(user_id);
+CREATE INDEX IF NOT EXISTS idx_addresses_user ON core.user_addresses(user_id);
 
 -- =============================================
 -- جدول المقاسات المحفوظة للزبائن
 -- =============================================
-CREATE TABLE core.user_measurements (
+CREATE TABLE IF NOT EXISTS core.user_measurements (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES core.users(id) ON DELETE CASCADE,
     
@@ -89,12 +89,12 @@ CREATE TABLE core.user_measurements (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_measurements_user ON core.user_measurements(user_id);
+CREATE INDEX IF NOT EXISTS idx_measurements_user ON core.user_measurements(user_id);
 
 -- =============================================
 -- جدول إعدادات النظام (Key-Value)
 -- =============================================
-CREATE TABLE core.settings (
+CREATE TABLE IF NOT EXISTS core.settings (
     key VARCHAR(100) PRIMARY KEY,
     value JSONB NOT NULL,
     description TEXT,
@@ -113,12 +113,13 @@ INSERT INTO core.settings (key, value, description, is_public) VALUES
 ('free_shipping_threshold', '15000', 'حد التوصيل المجاني', true),
 ('is_store_open', 'true', 'حالة استقبال الطلبات', false),
 ('currency', '"DZD"', 'العملة', true),
-('currency_symbol', '"دج"', 'رمز العملة', true);
+('currency_symbol', '"دج"', 'رمز العملة', true)
+ON CONFLICT (key) DO NOTHING;
 
 -- =============================================
 -- جدول سجل التدقيق (Audit Log)
 -- =============================================
-CREATE TABLE core.audit_log (
+CREATE TABLE IF NOT EXISTS core.audit_log (
     id BIGSERIAL PRIMARY KEY,
     
     -- من قام بالتغيير
@@ -138,9 +139,9 @@ CREATE TABLE core.audit_log (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_audit_table ON core.audit_log(table_name);
-CREATE INDEX idx_audit_user ON core.audit_log(user_id);
-CREATE INDEX idx_audit_created ON core.audit_log(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_table ON core.audit_log(table_name);
+CREATE INDEX IF NOT EXISTS idx_audit_user ON core.audit_log(user_id);
+CREATE INDEX IF NOT EXISTS idx_audit_created ON core.audit_log(created_at DESC);
 
 -- =============================================
 -- Trigger لتحديث updated_at تلقائياً

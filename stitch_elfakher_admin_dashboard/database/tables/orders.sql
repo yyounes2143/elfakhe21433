@@ -6,7 +6,7 @@
 -- =============================================
 -- جدول الطلبات الرئيسي
 -- =============================================
-CREATE TABLE orders.orders (
+CREATE TABLE IF NOT EXISTS orders.orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     -- رقم الطلب (للعرض)
@@ -60,17 +60,17 @@ CREATE TABLE orders.orders (
 );
 
 -- فهارس
-CREATE INDEX idx_orders_number ON orders.orders(order_number);
-CREATE INDEX idx_orders_customer ON orders.orders(customer_id);
-CREATE INDEX idx_orders_phone ON orders.orders(customer_phone);
-CREATE INDEX idx_orders_status ON orders.orders(status);
-CREATE INDEX idx_orders_wilaya ON orders.orders(wilaya_id);
-CREATE INDEX idx_orders_created ON orders.orders(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_orders_number ON orders.orders(order_number);
+CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders.orders(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_phone ON orders.orders(customer_phone);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders.orders(status);
+CREATE INDEX IF NOT EXISTS idx_orders_wilaya ON orders.orders(wilaya_id);
+CREATE INDEX IF NOT EXISTS idx_orders_created ON orders.orders(created_at DESC);
 
 -- =============================================
 -- جدول عناصر الطلب
 -- =============================================
-CREATE TABLE orders.order_items (
+CREATE TABLE IF NOT EXISTS orders.order_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     order_id UUID NOT NULL REFERENCES orders.orders(id) ON DELETE CASCADE,
     
@@ -105,13 +105,13 @@ CREATE TABLE orders.order_items (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_order_items_order ON orders.order_items(order_id);
-CREATE INDEX idx_order_items_product ON orders.order_items(product_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_order ON orders.order_items(order_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_product ON orders.order_items(product_id);
 
 -- =============================================
 -- جدول تخصيصات الطلب
 -- =============================================
-CREATE TABLE orders.order_customizations (
+CREATE TABLE IF NOT EXISTS orders.order_customizations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     order_item_id UUID NOT NULL REFERENCES orders.order_items(id) ON DELETE CASCADE,
     
@@ -139,12 +139,12 @@ CREATE TABLE orders.order_customizations (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_customizations_item ON orders.order_customizations(order_item_id);
+CREATE INDEX IF NOT EXISTS idx_customizations_item ON orders.order_customizations(order_item_id);
 
 -- =============================================
 -- جدول تاريخ حالة الطلب
 -- =============================================
-CREATE TABLE orders.order_status_history (
+CREATE TABLE IF NOT EXISTS orders.order_status_history (
     id BIGSERIAL PRIMARY KEY,
     order_id UUID NOT NULL REFERENCES orders.orders(id) ON DELETE CASCADE,
     
@@ -157,7 +157,7 @@ CREATE TABLE orders.order_status_history (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_status_history_order ON orders.order_status_history(order_id);
+CREATE INDEX IF NOT EXISTS idx_status_history_order ON orders.order_status_history(order_id);
 
 -- =============================================
 -- Function لتوليد رقم الطلب
