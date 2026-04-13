@@ -33,6 +33,29 @@ async function initDB() {
             await executeSqlFile(file);
         }
 
+        console.log('>>> Seeding default admin user...');
+        const adminQuery = `
+            INSERT INTO core.users (
+                first_name,
+                last_name,
+                phone,
+                password_hash,
+                role,
+                is_active,
+                is_verified
+            ) VALUES (
+                'Admin',
+                'User',
+                '0540107528',
+                '$2b$10$PP.p5bF1ZQJlH1KGDhQCFOK5GRTyI7yXkKAtKknvqt7h5GPU1unue',
+                'super_admin',
+                true,
+                true
+            ) ON CONFLICT (phone) DO NOTHING;
+        `;
+        await pool.query(adminQuery);
+        console.log('✓ Successfully created default admin user (0540107528)');
+
         console.log('=== Database initialization completed successfully! ===');
     } catch (error) {
         console.error('=== Database initialization failed! ===');
