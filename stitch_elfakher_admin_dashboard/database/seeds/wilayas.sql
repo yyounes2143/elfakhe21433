@@ -71,5 +71,4 @@ INSERT INTO shipping.wilayas (code, name_ar, name_fr, name_en, zone_id, shipping
 ('55', 'تقرت', 'Touggourt', 'Touggourt', 'a5555555-5555-5555-5555-555555555555', 1500, 5, 10),
 ('56', 'جانت', 'Djanet', 'Djanet', 'a5555555-5555-5555-5555-555555555555', 3000, 12, 18),
 ('57', 'عين صالح', 'In Salah', 'In Salah', 'a5555555-5555-5555-5555-555555555555', 2500, 10, 15),
-('58', 'عين قزام', 'In Guezzam', 'In Guezzam', 'a5555555-5555-5555-5555-555555555555', 3500, 14, 21)
-ON CONFLICT (code) DO NOTHING;
+('58', 'عين قزام', 'In Guezzam', 'In Guezzam', 'a5555555-5555-5555-5555-555555555555', 3500, 14, 21);

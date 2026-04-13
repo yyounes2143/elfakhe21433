@@ -6,7 +6,7 @@
 -- =============================================
 -- جدول الولايات الجزائرية (58 ولاية)
 -- =============================================
-CREATE TABLE IF NOT EXISTS shipping.wilayas (
+CREATE TABLE shipping.wilayas (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     code CHAR(2) UNIQUE NOT NULL,
@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS shipping.wilayas (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_wilayas_code ON shipping.wilayas(code);
+CREATE INDEX idx_wilayas_code ON shipping.wilayas(code);
 
 -- =============================================
 -- جدول مناطق الشحن
 -- =============================================
-CREATE TABLE IF NOT EXISTS shipping.zones (
+CREATE TABLE shipping.zones (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     
     name VARCHAR(100) NOT NULL,
@@ -59,8 +59,7 @@ INSERT INTO shipping.zones (id, name, name_ar, base_shipping_cost, delivery_days
 ('a2222222-2222-2222-2222-222222222222'::uuid, 'Zone 2 - Central', 'المنطقة 2 - الوسط', 800, 2, 4),
 ('a3333333-3333-3333-3333-333333333333'::uuid, 'Zone 3 - East', 'المنطقة 3 - الشرق', 1000, 3, 5),
 ('a4444444-4444-4444-4444-444444444444'::uuid, 'Zone 4 - West', 'المنطقة 4 - الغرب', 1000, 3, 5),
-('a5555555-5555-5555-5555-555555555555'::uuid, 'Zone 5 - South', 'المنطقة 5 - الجنوب', 1500, 5, 10)
-ON CONFLICT (id) DO NOTHING;
+('a5555555-5555-5555-5555-555555555555'::uuid, 'Zone 5 - South', 'المنطقة 5 - الجنوب', 1500, 5, 10);
 
 -- إضافة Foreign Key بعد إنشاء جدول المناطق
 ALTER TABLE shipping.wilayas 
