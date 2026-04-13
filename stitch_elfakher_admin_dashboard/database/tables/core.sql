@@ -155,14 +155,17 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- تطبيق الـ trigger على الجداول
+DROP TRIGGER IF EXISTS update_users_timestamp ON core.users;
 CREATE TRIGGER update_users_timestamp
     BEFORE UPDATE ON core.users
     FOR EACH ROW EXECUTE FUNCTION core.update_timestamp();
 
+DROP TRIGGER IF EXISTS update_addresses_timestamp ON core.user_addresses;
 CREATE TRIGGER update_addresses_timestamp
     BEFORE UPDATE ON core.user_addresses
     FOR EACH ROW EXECUTE FUNCTION core.update_timestamp();
 
+DROP TRIGGER IF EXISTS update_measurements_timestamp ON core.user_measurements;
 CREATE TRIGGER update_measurements_timestamp
     BEFORE UPDATE ON core.user_measurements
     FOR EACH ROW EXECUTE FUNCTION core.update_timestamp();

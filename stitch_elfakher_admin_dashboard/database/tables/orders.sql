@@ -193,6 +193,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS generate_order_number ON orders.orders;
 CREATE TRIGGER generate_order_number
     BEFORE INSERT ON orders.orders
     FOR EACH ROW EXECUTE FUNCTION orders.set_order_number();
@@ -212,6 +213,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS log_order_status ON orders.orders;
 CREATE TRIGGER log_order_status
     BEFORE UPDATE ON orders.orders
     FOR EACH ROW EXECUTE FUNCTION orders.log_status_change();
@@ -230,6 +232,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS update_product_order_count ON orders.order_items;
 CREATE TRIGGER update_product_order_count
     AFTER INSERT ON orders.order_items
     FOR EACH ROW EXECUTE FUNCTION orders.update_product_stats();
@@ -251,6 +254,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS update_customer_order_stats ON orders.orders;
 CREATE TRIGGER update_customer_order_stats
     AFTER UPDATE ON orders.orders
     FOR EACH ROW EXECUTE FUNCTION orders.update_customer_stats();
