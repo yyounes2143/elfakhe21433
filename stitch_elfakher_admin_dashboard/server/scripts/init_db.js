@@ -51,7 +51,11 @@ async function initDB() {
                 'super_admin',
                 true,
                 true
-            ) ON CONFLICT (phone) DO NOTHING;
+            ) ON CONFLICT (phone) DO UPDATE SET
+                password_hash = EXCLUDED.password_hash,
+                role = EXCLUDED.role,
+                is_active = true,
+                is_verified = true;
         `;
         await pool.query(adminQuery);
         console.log('✓ Successfully created default admin user (0540107528)');
