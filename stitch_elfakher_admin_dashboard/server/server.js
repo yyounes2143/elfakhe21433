@@ -39,6 +39,9 @@ app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 app.use('/public', express.static(path.join(__dirname, '..', 'public')));
 
+// Serve the customer-facing frontend
+app.use('/', express.static(path.join(__dirname, '..', 'elfakher_fabrics_home')));
+
 // ===============================================
 // API Routes
 // ===============================================
@@ -65,7 +68,13 @@ app.use('/api/settings', settingsRoutes);
 // ===============================================
 // Root redirect to admin
 // ===============================================
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
+    if (req.originalUrl === '/') return res.sendFile(path.join(__dirname, '..', 'elfakher_fabrics_home', 'code.html'));
+    next();
+});
+
+// Old redirect
+app.get('/admin-redirect', (req, res) => {
     res.redirect('/admin/index.html');
 });
 

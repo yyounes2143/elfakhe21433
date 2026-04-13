@@ -30,6 +30,11 @@ async function executeSqlFile(filePath) {
                     await pool.query(stmt);
                 } catch (stmtErr) {
                     // Ignore common idempotency errors: duplicate table/index/type, unique violation, etc.
+                    // 42P07: duplicate_table
+                    // 42710: duplicate_object (including triggers)
+                    // 23505: unique_violation
+                    // 42712: duplicate_alias
+                    // 42704: undefined_object
                     if (!['42P07', '42710', '23505', '42712', '42704'].includes(stmtErr.code)) {
                          console.warn(`Warning executing statement in ${filePath}:`, stmtErr.message);
                     }
@@ -39,6 +44,7 @@ async function executeSqlFile(filePath) {
         }
     } catch (error) {
         console.error(`✗ File read error in ${filePath}:`, error.message);
+        throw error;
     }
 }
 
@@ -57,7 +63,11 @@ async function initDB() {
         ];
 
         for (const file of filesToExecute) {
-            await executeSqlFile(file);
+            try {
+                await executeSqlFile(file);
+            } catch (err) {
+                console.warn(`! Skipped or failed part of ${file} (likely already initialized). Continuing...`);
+            }
         }
 
         console.log('>>> Seeding default admin user...');
