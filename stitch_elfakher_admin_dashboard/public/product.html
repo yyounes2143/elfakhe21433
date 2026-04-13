@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>تفاصيل المنتج | ELFAKHER</title>
+    <meta name="description" content="تفاصيل المنتج - ELFAKHER للثياب والأقمشة الفاخرة">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           DESIGN SYSTEM (Shared with homepage)
+           ======================================== */
+        :root {
+            --bg: #F5F0EB;
+            --bg-card: #FFFFFF;
+            --bg-dark: #1A232E;
+            --bg-dark-light: #243040;
+            --accent: #C19A5B;
+            --accent-hover: #D4AB6A;
+            --text-primary: #1A232E;
+            --text-secondary: #6B7280;
+            --text-light: #9CA3AF;
+            --text-white: #FFFFFF;
+            --border: #E8E2DA;
+            --success: #10B981;
+            --error: #EF4444;
+            --shadow-sm: 0 2px 8px rgba(26, 35, 46, 0.06);
+            --shadow-md: 0 8px 24px rgba(26, 35, 46, 0.1);
+            --shadow-lg: 0 16px 48px rgba(26, 35, 46, 0.12);
+            --radius: 1rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+            --radius-full: 9999px;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-arabic: 'Cairo', sans-serif;
+            --bottom-nav-height: 5rem;
+            --header-height: 4.5rem;
+        }
+        .dark {
+            --bg: #0F1419;
+            --bg-card: #1A232E;
+            --bg-dark: #0A0F14;
+            --bg-dark-light: #243040;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --text-light: #6B7280;
+            --border: #2D3A4A;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Reset */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: var(--font-arabic);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+        button { border: none; background: none; cursor: pointer; font-family: inherit; }
+        ul { list-style: none; }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            padding: 1rem 1.25rem;
+            transition: box-shadow 0.3s, background 0.3s;
+        }
+        .app-header.scrolled {
+            box-shadow: var(--shadow-sm);
+        }
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .store-greeting {
+            display: flex;
+            flex-direction: column;
+        }
+        .store-greeting small {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .store-greeting h1 {
+            font-family: var(--font-display);
+            font-size: 1.625rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .icon-circle {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: all 0.2s;
+            position: relative;
+        }
+        .icon-circle:hover {
+            background: var(--bg-dark);
+            color: var(--text-white);
+            border-color: var(--bg-dark);
+        }
+        .icon-circle .material-icons-outlined { font-size: 1.375rem; }
+        .cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            min-width: 1.125rem;
+            height: 1.125rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ========================================
+           MAIN
+           ======================================== */
+        .main-content {
+            padding: 0 1.25rem;
+            padding-bottom: calc(var(--bottom-nav-height) + 1.5rem);
+            max-width: 1280px; margin: 0 auto;
+        }
+
+        /* ========================================
+           BREADCRUMB
+           ======================================== */
+        .breadcrumb {
+            display: flex; align-items: center; gap: 0.375rem;
+            font-size: 0.8125rem; color: var(--text-light);
+            margin-bottom: 1rem; padding-top: 0.5rem;
+        }
+        .breadcrumb a { color: var(--text-secondary); transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb .material-icons-outlined { font-size: 0.875rem; }
+
+        /* ========================================
+           PRODUCT LAYOUT
+           ======================================== */
+        .product-layout {
+            display: grid; grid-template-columns: 1fr;
+            gap: 1.5rem; animation: fadeUp 0.5s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery { position: relative; }
+        .main-image {
+            aspect-ratio: 3/4; border-radius: var(--radius-xl);
+            overflow: hidden; background: var(--bg-card);
+            box-shadow: var(--shadow-sm);
+        }
+        .main-image img, .main-image video {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .main-image:hover img { transform: scale(1.03); }
+        .thumbnails {
+            display: flex; gap: 0.5rem; margin-top: 0.75rem;
+            overflow-x: auto; padding-bottom: 0.25rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .thumbnails::-webkit-scrollbar { height: 3px; }
+        .thumbnails::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        .thumbnail {
+            flex-shrink: 0; width: 60px; height: 60px;
+            border-radius: 0.75rem; overflow: hidden;
+            border: 2px solid transparent; cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .thumbnail.active, .thumbnail:hover {
+            border-color: var(--accent); transform: scale(1.05);
+        }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ===== PRODUCT INFO ===== */
+        .product-details { padding: 0.5rem 0; }
+        .product-title {
+            font-family: var(--font-arabic); font-size: 1.375rem;
+            font-weight: 800; margin-bottom: 0.5rem; line-height: 1.4;
+        }
+        .product-price-row {
+            display: flex; align-items: baseline; gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .product-price {
+            font-size: 1.5rem; font-weight: 800; color: var(--accent);
+        }
+        .product-price-old {
+            font-size: 0.9375rem; font-weight: 500;
+            color: var(--text-light); text-decoration: line-through;
+        }
+        .product-discount-badge {
+            padding: 0.2rem 0.5rem; background: #EF4444; color: white;
+            font-size: 0.6875rem; font-weight: 700; border-radius: var(--radius-full);
+        }
+        .product-desc {
+            font-size: 0.875rem; color: var(--text-secondary);
+            line-height: 1.8; margin-bottom: 1.5rem;
+        }
+        .stock-info {
+            display: inline-flex; align-items: center; gap: 0.375rem;
+            font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem;
+        }
+        .stock-info.in-stock { color: var(--success); }
+        .stock-info.out-stock { color: var(--error); }
+        .stock-info .material-icons-outlined { font-size: 1rem; }
+
+        /* ===== OPTION SECTIONS ===== */
+        .option-section {
+            background: var(--bg-card); border-radius: var(--radius-lg);
+            padding: 1.25rem; margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .option-header {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 0.875rem;
+        }
+        .option-step {
+            width: 1.5rem; height: 1.5rem; background: var(--accent);
+            color: white; border-radius: 50%; font-size: 0.6875rem;
+            font-weight: 700; display: flex; align-items: center;
+            justify-content: center;
+        }
+        .option-title { font-size: 0.9375rem; font-weight: 700; }
+        .option-selected {
+            font-size: 0.8125rem; color: var(--text-secondary); margin-right: auto;
+        }
+
+        /* Colors */
+        .color-options { display: flex; gap: 0.625rem; flex-wrap: wrap; }
+        .color-choice {
+            width: 2.75rem; height: 2.75rem; border-radius: 50%;
+            cursor: pointer; transition: all 0.2s; position: relative;
+            border: 3px solid transparent !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .color-choice:hover { transform: scale(1.12); }
+        .color-choice.selected {
+            border: 3px solid var(--accent) !important;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent);
+        }
+        .color-choice.selected::after {
+            content: '✓'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); color: white;
+            font-size: 0.875rem; font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .color-choice.disabled { opacity: 0.3; pointer-events: none; }
+
+        /* Sizes */
+        .size-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .size-btn {
+            padding: 0.625rem; border: 1.5px solid var(--border);
+            border-radius: 0.75rem; text-align: center; cursor: pointer;
+            font-weight: 600; font-size: 0.875rem;
+            transition: all 0.2s; background: var(--bg);
+        }
+        .size-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .size-btn.selected {
+            background: var(--bg-dark); color: white; border-color: var(--bg-dark);
+        }
+        .size-guide-link {
+            display: inline-flex; align-items: center; gap: 0.25rem;
+            margin-top: 0.75rem; font-size: 0.8125rem; color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* ===== QUANTITY + ADD TO CART ===== */
+        .cart-action-card {
+            background: var(--bg-card); border-radius: var(--radius-lg);
+            padding: 1.25rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem;
+        }
+        .qty-row {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .qty-control {
+            display: flex; align-items: center;
+            border: 1.5px solid var(--border); border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .qty-btn {
+            width: 2.5rem; height: 2.5rem; background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.125rem; font-weight: 600;
+            transition: background 0.2s;
+        }
+        .qty-btn:hover { background: var(--border); }
+        .qty-input {
+            width: 3rem; text-align: center; border: none;
+            background: var(--bg-card); color: var(--text-primary);
+            font-weight: 700; font-size: 0.9375rem; font-family: var(--font-arabic);
+        }
+        .add-cart-btn {
+            width: 100%; padding: 0.875rem;
+            background: var(--bg-dark); color: white;
+            border-radius: var(--radius-full);
+            font-weight: 700; font-size: 0.9375rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            transition: all 0.25s;
+            box-shadow: 0 4px 12px rgba(26, 35, 46, 0.2);
+        }
+        .add-cart-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        .add-cart-btn:disabled { background: var(--text-light); cursor: not-allowed; transform: none; }
+        .add-cart-btn .material-icons-outlined { font-size: 1.25rem; }
+
+        /* ===== QUICK ORDER ===== */
+        .quick-order-card {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-light) 100%);
+            color: white; border-radius: var(--radius-xl);
+            padding: 1.5rem; margin-bottom: 1rem;
+        }
+        .quick-order-card h3 {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-family: var(--font-arabic); font-size: 1.0625rem;
+            font-weight: 800; margin-bottom: 0.375rem;
+        }
+        .quick-order-card > p {
+            font-size: 0.8125rem; color: rgba(255,255,255,0.65);
+            margin-bottom: 1.25rem;
+        }
+        .quick-order-card .form-row {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0.75rem; margin-bottom: 0.75rem;
+        }
+        .quick-order-card input,
+        .quick-order-card select {
+            padding: 0.75rem 1rem; width: 100%;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 0.75rem;
+            background: rgba(255,255,255,0.08);
+            color: white; font-family: var(--font-arabic);
+            font-size: 0.875rem; outline: none;
+            transition: border-color 0.2s;
+        }
+        .quick-order-card input::placeholder { color: rgba(255,255,255,0.4); }
+        .quick-order-card input:focus,
+        .quick-order-card select:focus { border-color: var(--accent); }
+        .quick-order-card select option { background: var(--bg-dark); color: white; }
+        .quick-submit-btn {
+            width: 100%; padding: 0.875rem;
+            background: var(--accent); color: white;
+            border-radius: var(--radius-full);
+            font-weight: 700; font-size: 0.9375rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            transition: all 0.2s; margin-top: 0.75rem;
+        }
+        .quick-submit-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+        /* ========================================
+           LOADING + SKELETON
+           ======================================== */
+        .loading-state {
+            text-align: center; padding: 5rem 1rem;
+            color: var(--text-secondary);
+        }
+        .loading-state .material-icons-outlined {
+            font-size: 3rem; animation: spin 1s linear infinite;
+            display: block; margin: 0 auto 1rem; color: var(--accent);
+        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* ========================================
+           BOTTOM NAVIGATION
+           ======================================== */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+            background: var(--bg-dark);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: 0.75rem 1.5rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
+            display: flex; align-items: center; justify-content: space-around;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+            padding: 0.5rem 1rem; border-radius: var(--radius);
+            transition: all 0.2s; color: rgba(255,255,255,0.5); position: relative;
+        }
+        .nav-item:hover { color: rgba(255,255,255,0.8); }
+        .nav-item.active { color: white; background: rgba(255,255,255,0.1); }
+        .nav-item .material-icons-outlined { font-size: 1.5rem; }
+        .nav-item .nav-label { font-size: 0.625rem; font-weight: 600; }
+        .nav-item .nav-badge {
+            position: absolute; top: 0.125rem; right: 0.5rem;
+            min-width: 1rem; height: 1rem; background: var(--accent); color: white;
+            font-size: 0.5625rem; font-weight: 700; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ========================================
+           WHATSAPP BUTTON
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: calc(var(--bottom-nav-height) + 1.25rem);
+            left: 1.25rem; z-index: 140;
+            width: 3.25rem; height: 3.25rem;
+            background: #25D366; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); color: white; }
+        .whatsapp-float svg { width: 1.75rem; height: 1.75rem; }
+
+        /* ========================================
+           DESKTOP (768px+)
+           ======================================== */
+        @media (min-width: 768px) {
+            .main-content { padding: 0 2rem; padding-bottom: 2rem; }
+            .app-header { padding: 1rem 2rem; }
+            .store-greeting { display: none; }
+            .header-logo { display: flex; }
+            .desktop-nav { display: flex; }
+            .bottom-nav { display: none; }
+            .whatsapp-float { bottom: 1.5rem; }
+
+            .product-layout {
+                grid-template-columns: 1fr 1fr; gap: 2.5rem;
+            }
+            .gallery { position: sticky; top: 6rem; }
+            .main-image { aspect-ratio: 3/4; }
+            .thumbnail { width: 72px; height: 72px; }
+            .product-title { font-size: 1.75rem; }
+            .product-price { font-size: 1.75rem; }
+            .size-grid { grid-template-columns: repeat(6, 1fr); }
+            .quick-order-card .form-row { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1024px) {
+            .main-content { padding: 0 3rem; padding-bottom: 3rem; }
+            .app-header { padding: 1rem 3rem; }
+            .product-layout { gap: 3.5rem; }
+            .product-title { font-size: 2rem; }
+        }
+
+        /* ========================================
+           CART NOTIFICATION
+           ======================================== */
+        .cart-notification {
+            position: fixed; top: -80px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-dark); color: white;
+            padding: 0.875rem 1.5rem; border-radius: var(--radius-full);
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.875rem; font-weight: 600;
+            z-index: 300; transition: top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-lg);
+        }
+        .cart-notification.show { top: 1.25rem; }
+        .cart-notification .material-icons-outlined { color: var(--success); }
+    
+        /* ========================================
+           HEADER & NAVIGATION (UNIFIED)
+           ======================================== */
+        .app-header {
+            position: sticky; top: 0; z-index: 999;
+            background: var(--bg); padding: 1rem 1.25rem;
+            transition: box-shadow 0.3s, background 0.3s;
+            border-bottom: none; /* User requirement: no borders */
+        }
+        .app-header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1280px; margin: 0 auto; width: 100%;
+        }
+
+        /* Mobile Greeting */
+        .store-greeting { display: flex; flex-direction: column; }
+        .store-greeting small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+        .store-greeting h1 { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text-primary); margin: 0; line-height: 1.2; }
+
+        /* Desktop Logo */
+        .header-logo { display: none; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .header-logo img { height: 2.75rem !important; width: auto !important; max-width: 100px; object-fit: contain; }
+        .header-logo-text { display: flex; flex-direction: column; }
+        .header-logo-text .brand-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+        .header-logo-text .brand-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+
+        /* Desktop Navigation */
+        .desktop-nav { display: none; align-items: center; gap: 1rem; }
+        .desktop-nav a {
+            text-decoration: none; font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary);
+            padding: 0.5rem 1.25rem; border-radius: var(--radius-full); transition: all 0.3s ease; background: transparent;
+        }
+        .desktop-nav a:hover { color: white; background: rgba(193, 154, 91, 0.7); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(193, 154, 91, 0.2); }
+        .desktop-nav a.active { color: var(--bg-card); background: var(--accent); font-weight: 800; box-shadow: 0 4px 12px rgba(193, 154, 91, 0.3); }
+
+        /* Actions */
+        .header-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .icon-circle {
+            width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; background: var(--bg-card); color: var(--text-primary);
+            transition: all 0.2s; position: relative; text-decoration: none; cursor: pointer;
+        }
+        .icon-circle:hover { background: var(--bg-dark); color: white; border-color: var(--bg-dark); }
+        .icon-circle .material-icons-outlined { font-size: 1.375rem; }
+
+        /* Cart Badge */
+        .cart-count, .cart-badge {
+            position: absolute !important; top: -2px !important; right: -2px !important; 
+            min-width: 1.125rem !important; height: 1.125rem !important;
+            background: var(--accent) !important; color: white !important; 
+            font-size: 0.625rem !important; font-weight: 700 !important;
+            border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important;
+            border: none !important; margin: 0 !important; padding: 0 !important;
+        }
+
+        /* Desktop Header Layout Restraints */
+        @media (min-width: 768px) {
+            .app-header { padding: 1rem 2rem; }
+            .store-greeting { display: none !important; }
+            .header-logo { display: flex !important; }
+            .desktop-nav { display: flex !important; }
+            .header-actions { justify-content: flex-end; }
+        }
+        @media (min-width: 1024px) {
+            .app-header { padding: 1rem 3rem; }
+        }
+
+    
+        /* ========================================
+           HEADER & NAVIGATION (UNIFIED)
+           ======================================== */
+        .app-header {
+            position: sticky; top: 0; z-index: 999;
+            background: var(--bg); padding: 1rem 1.25rem;
+            transition: box-shadow 0.3s, background 0.3s;
+            border-bottom: none; /* User requirement: no borders */
+        }
+        .app-header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1280px; margin: 0 auto; width: 100%;
+        }
+
+        /* Mobile Greeting */
+        .store-greeting { display: flex; flex-direction: column; }
+        .store-greeting small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+        .store-greeting h1 { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text-primary); margin: 0; line-height: 1.2; }
+
+        /* Desktop Logo */
+        .header-logo { display: none; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .header-logo img { height: 2.75rem !important; width: auto !important; max-width: 100px; object-fit: contain; }
+        .header-logo-text { display: flex; flex-direction: column; }
+        .header-logo-text .brand-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+        .header-logo-text .brand-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #C19A5B; }
+
+        /* Desktop Navigation */
+        .desktop-nav { display: none; align-items: center; gap: 1rem; }
+        .desktop-nav a {
+            text-decoration: none; font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary);
+            padding: 0.5rem 1.25rem; border-radius: var(--radius-full); transition: all 0.3s ease; background: transparent;
+        }
+        .desktop-nav a:hover { color: white; background: rgba(193, 154, 91, 0.7); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(193, 154, 91, 0.2); }
+        .desktop-nav a.active { color: var(--bg-card); background: #C19A5B; font-weight: 800; box-shadow: 0 4px 12px rgba(193, 154, 91, 0.3); }
+
+        /* Actions */
+        .header-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .icon-circle {
+            width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; background: var(--bg-card); color: var(--text-primary);
+            transition: all 0.2s; position: relative; text-decoration: none; cursor: pointer;
+        }
+        .icon-circle:hover { background: var(--bg-dark); color: white; border-color: var(--bg-dark); }
+        .icon-circle .material-icons-outlined { font-size: 1.375rem; }
+
+        /* Cart Badge */
+        .cart-count, .cart-badge {
+            position: absolute !important; top: -2px !important; right: -2px !important; 
+            min-width: 1.125rem !important; height: 1.125rem !important;
+            background: #C19A5B !important; color: white !important; 
+            font-size: 0.625rem !important; font-weight: 700 !important;
+            border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important;
+            border: none !important; margin: 0 !important; padding: 0 !important;
+        }
+
+        /* Desktop Header Layout Restraints */
+        @media (min-width: 768px) {
+            .app-header { padding: 1rem 2rem; }
+            .store-greeting { display: none !important; }
+            .header-logo { display: flex !important; }
+            .desktop-nav { display: flex !important; }
+            .header-actions { justify-content: flex-end; }
+        }
+        @media (min-width: 1024px) {
+            .app-header { padding: 1rem 3rem; }
+        }
+
+    </style>
+</head>
+
+<body>
+            <!-- ======== HEADER ======== -->
+    <header class="app-header" id="appHeader">
+        <div class="header-row">
+            <!-- Mobile: Store Greeting -->
+            <div class="store-greeting">
+                <small>مرحباً بك في</small>
+                <h1>ELFAKHER</h1>
+            </div>
+
+            <!-- Desktop: Logo (Right RTL) -->
+            <a href="index.html" class="header-logo">
+                <img src="../assets/logo.png" alt="ELFAKHER">
+                <div class="header-logo-text">
+                    <span class="brand-name">ELFAKHER</span>
+                    <span class="brand-tag">Fabrics</span>
+                </div>
+            </a>
+
+            <!-- Desktop: Navigation (Center RTL) -->
+            <nav class="desktop-nav">
+                <a href="index.html" class="">الرئيسية</a>
+                <a href="products.html" class="active">المنتجات</a>
+                <a href="contact.html" class="">اتصل بنا</a>
+            </nav>
+
+            <!-- Actions (Left RTL) -->
+            <div class="header-actions">
+                
+                <button class="icon-circle" style="visibility: hidden;" aria-hidden="true" disabled>
+                    <span class="material-icons-outlined">search</span>
+                </button>
+                <a href="cart.html" class="icon-circle" aria-label="السلة">
+                    <span class="material-icons-outlined">shopping_bag</span>
+                    <span class="cart-count cart-badge" style="display:none;">0</span>
+                </a>
+                <button class="icon-circle" id="darkModeToggle" aria-label="الوضع المظلم">
+                    <span class="material-icons-outlined">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ======== MAIN ======== -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">الرئيسية</a>
+            <span class="material-icons-outlined">chevron_left</span>
+            <a href="products.html">المنتجات</a>
+            <span class="material-icons-outlined">chevron_left</span>
+            <span id="breadcrumbTitle">...</span>
+        </nav>
+
+        <!-- Loading -->
+        <div id="loading" class="loading-state">
+            <span class="material-icons-outlined">sync</span>
+            <p>جاري تحميل تفاصيل المنتج...</p>
+        </div>
+
+        <!-- Product Layout (hidden until loaded) -->
+        <div class="product-layout" id="productLayout" style="display:none;">
+            <!-- Gallery -->
+            <div class="gallery">
+                <div class="main-image" id="mainImageContainer">
+                    <img id="mainImage" src="" alt="صورة المنتج" onerror="this.src='../assets/logo.png'">
+                </div>
+                <div class="thumbnails" id="thumbnails"></div>
+            </div>
+
+            <!-- Product Info & Actions -->
+            <div class="product-details">
+                <h1 class="product-title" id="productTitle">جاري التحميل...</h1>
+
+                <div class="product-price-row">
+                    <span class="product-price" id="productPrice"></span>
+                    <span class="product-price-old" id="productPriceOld" style="display:none;"></span>
+                    <span class="product-discount-badge" id="productDiscount" style="display:none;"></span>
+                </div>
+
+                <div class="stock-info in-stock" id="stockStatus">
+                    <span class="material-icons-outlined">check_circle</span>
+                    <span id="qtyDisplay">متوفر</span>
+                </div>
+
+                <p class="product-desc" id="productDesc"></p>
+
+                <!-- 1. Colors -->
+                <div class="option-section" id="colorsSection" style="display:none;">
+                    <div class="option-header">
+                        <span class="option-step">1</span>
+                        <span class="option-title">اختر اللون</span>
+                        <span class="option-selected">اللون: <strong id="colorName">-</strong></span>
+                    </div>
+                    <div class="color-options" id="colorOptions"></div>
+                </div>
+
+                <!-- 2. Sizes -->
+                <div class="option-section" id="sizesSection" style="display:none;">
+                    <div class="option-header">
+                        <span class="option-step">2</span>
+                        <span class="option-title">اختر المقاس</span>
+                        <span class="option-selected">المقاس: <strong id="sizeName">-</strong></span>
+                    </div>
+                    <div class="size-grid" id="sizeGrid"></div>
+                    <a href="size-guide.html" class="size-guide-link">
+                        <span class="material-icons-outlined" style="font-size:1rem;">straighten</span>
+                        دليل المقاسات
+                    </a>
+                </div>
+
+                <!-- Add to Cart -->
+                <div class="cart-action-card">
+                    <div class="qty-row">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                            <input type="number" class="qty-input" id="qtyInput" value="1" min="1" readonly>
+                            <button class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+                    <button id="addToCartBtn" class="add-cart-btn" onclick="addToCart()">
+                        <span class="material-icons-outlined">shopping_cart</span>
+                        أضف إلى السلة
+                    </button>
+                </div>
+
+                <!-- Quick Order -->
+                <div class="quick-order-card">
+                    <h3>
+                        <span class="material-icons-outlined">flash_on</span>
+                        طلب سريع
+                    </h3>
+                    <p>لا تريد التسجيل؟ املأ البيانات وسنتصل بك لتأكيد الطلب</p>
+                    <form id="quickOrderForm" onsubmit="submitQuickOrder(event)">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="الاسم الأول" required>
+                            <input type="text" name="surname" placeholder="اللقب" required>
+                        </div>
+                        <input type="tel" name="phone" placeholder="رقم الهاتف (0550...)" required style="margin-bottom:0.75rem;">
+                        <select name="wilaya" class="wilaya-select" required style="margin-bottom:0;">
+                            <option value="">اختر الولاية</option>
+                        </select>
+                        <button type="submit" class="quick-submit-btn">
+                            <span class="material-icons-outlined" style="font-size:1.125rem;">send</span>
+                            تأكيد الطلب السريع
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ======== BOTTOM NAV ======== -->
+    <nav class="bottom-nav" id="bottomNav">
+        <a href="index.html" class="nav-item">
+            <span class="material-icons-outlined">home</span>
+            <span class="nav-label">الرئيسية</span>
+        </a>
+        <a href="products.html" class="nav-item">
+            <span class="material-icons-outlined">grid_view</span>
+            <span class="nav-label">التصنيفات</span>
+        </a>
+        <a href="cart.html" class="nav-item">
+            <span class="material-icons-outlined">shopping_bag</span>
+            <span class="nav-label">السلة</span>
+            <span class="nav-badge cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="contact.html" class="nav-item">
+            <span class="material-icons-outlined">call</span>
+            <span class="nav-label">اتصل بنا</span>
+        </a>
+    </nav>
+
+    <!-- ======== WHATSAPP ======== -->
+    <a href="https://wa.me/213555123456" class="whatsapp-float" target="_blank" rel="noopener" aria-label="واتساب">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
+
+    <!-- ======== CART NOTIFICATION ======== -->
+    <div class="cart-notification" id="cartNotification">
+        <span class="material-icons-outlined">check_circle</span>
+        تمت الإضافة إلى السلة
+    </div>
+
+    <!-- ======== SCRIPTS ======== -->
+    <script src="../js/main.js"></script>
+    <script>
+        // ===== FORMAT PRICE =====
+        const formatProductPrice = (price) => new Intl.NumberFormat('ar-DZ').format(price) + ' دج';
+
+        // Dark mode is handled by main.js.
+
+        // ===== HEADER SCROLL =====
+        window.addEventListener('scroll', () => {
+            document.getElementById('appHeader')?.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // ===== IMAGE GALLERY =====
+        window.changeImage = function(el, src) {
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+            renderMainMedia(src);
+        };
+
+        function renderMainMedia(src) {
+            const container = document.getElementById('mainImageContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            const isVideo = src.startsWith('data:video') || src.endsWith('.mp4') || src.endsWith('.webm');
+            if (isVideo) {
+                const video = document.createElement('video');
+                video.src = src; video.controls = true; video.autoplay = true; video.muted = true;
+                video.style.cssText = 'width:100%;height:100%;object-fit:contain;';
+                container.appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.src = src; img.id = 'mainImage';
+                img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                img.onerror = function() { this.src = '../assets/logo.png'; };
+                container.appendChild(img);
+            }
+        }
+
+        // ===== SELECT COLOR =====
+        window.selectColor = function(el) {
+            document.querySelectorAll('.color-choice').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            const name = el.getAttribute('title') || el.dataset.color || '-';
+            document.getElementById('colorName').textContent = name;
+
+            // Image-color linking
+            if (window.imageColorLinkingEnabled && window.productImages && window.productImages.length > 0) {
+                const colorValue = el.dataset.color;
+                const filteredImages = window.productImages.filter(img => {
+                    if (typeof img === 'string') return true;
+                    return !img.color || img.color === colorValue;
+                });
+                const imagesToShow = filteredImages.length > 0 ? filteredImages : window.productImages;
+                const firstImg = typeof imagesToShow[0] === 'string' ? imagesToShow[0] : imagesToShow[0].url;
+                renderMainMedia(firstImg);
+
+                const thumbsContainer = document.getElementById('thumbnails');
+                if (thumbsContainer) {
+                    thumbsContainer.innerHTML = imagesToShow.map((img, idx) => {
+                        const imgUrl = typeof img === 'string' ? img : img.url;
+                        const isVideo = imgUrl.endsWith('.mp4') || imgUrl.endsWith('.webm');
+                        const content = isVideo
+                            ? `<div style="width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;color:white;"><span class="material-icons-outlined" style="font-size:1rem;">videocam</span></div>`
+                            : `<img src="${imgUrl}" alt="">`;
+                        return `<div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeImage(this, '${imgUrl}')">${content}</div>`;
+                    }).join('');
+                }
+            }
+        };
+
+        // ===== SELECT SIZE =====
+        window.selectSize = function(el) {
+            document.querySelectorAll('.size-btn').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('sizeName').textContent = el.dataset.size;
+
+            const sizeId = el.dataset.sizeId;
+            const availability = window.sizeColorAvailability || {};
+            const availableColorsForSize = availability[sizeId];
+            const hasMapping = availableColorsForSize && availableColorsForSize.length > 0;
+
+            document.querySelectorAll('.color-choice').forEach(colorEl => {
+                const colorId = colorEl.dataset.colorId;
+                if (hasMapping && !availableColorsForSize.includes(colorId)) {
+                    colorEl.classList.add('disabled');
+                    colorEl.style.opacity = '0.3';
+                    colorEl.style.pointerEvents = 'none';
+                    if (colorEl.classList.contains('selected')) {
+                        colorEl.classList.remove('selected');
+                        const firstAvailable = document.querySelector('.color-choice:not(.disabled)');
+                        if (firstAvailable) {
+                            firstAvailable.classList.add('selected');
+                            document.getElementById('colorName').textContent = firstAvailable.getAttribute('title') || firstAvailable.dataset.color;
+                        }
+                    }
+                } else {
+                    colorEl.classList.remove('disabled');
+                    colorEl.style.opacity = '1';
+                    colorEl.style.pointerEvents = 'auto';
+                }
+            });
+        };
+
+        // ===== QUANTITY =====
+        window.changeQty = function(delta) {
+            const input = document.getElementById('qtyInput');
+            let val = parseInt(input.value) || 1;
+            val = Math.max(1, val + delta);
+            input.value = val;
+        };
+
+        // ===== ADD TO CART =====
+        window.addToCart = function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+
+            const colorEl = document.querySelector('.color-choice.selected');
+            const sizeEl = document.querySelector('.size-btn.selected');
+            const color = colorEl ? (colorEl.getAttribute('title') || colorEl.dataset.color) : null;
+            let size = sizeEl ? sizeEl.dataset.size : null;
+
+            if (!size) { alert('الرجاء اختيار المقاس'); return; }
+
+            const title = document.getElementById('productTitle').textContent;
+            const price = window.productPrice || 0;
+            const mainImg = document.getElementById('mainImage')?.src || '';
+            const image = mainImg.length > 200 ? '' : mainImg;
+
+            const item = {
+                productId: id, title, price, image, quantity: qty,
+                color, size,
+                collar: document.querySelector('input[name="collar"]:checked')?.value || null,
+                button: document.querySelector('input[name="button"]:checked')?.value || null,
+                sleeve: document.querySelector('input[name="sleeve"]:checked')?.value || null
+            };
+
+            const cartKey = 'elfakher_cart';
+            let cartData = JSON.parse(localStorage.getItem(cartKey) || '[]');
+            const existIdx = cartData.findIndex(i =>
+                i.productId === item.productId && i.color === item.color &&
+                i.size === item.size && i.collar === item.collar &&
+                i.button === item.button && i.sleeve === item.sleeve
+            );
+
+            if (existIdx > -1) { cartData[existIdx].quantity += item.quantity; }
+            else { cartData.push(item); }
+
+            try { localStorage.setItem(cartKey, JSON.stringify(cartData)); }
+            catch (e) { alert('خطأ في حفظ السلة'); return; }
+
+            updateCartCount();
+
+            // Show notification
+            const notif = document.getElementById('cartNotification');
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2500);
+
+            // Button feedback
+            const btn = document.getElementById('addToCartBtn');
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="material-icons-outlined">check</span> تمت الإضافة';
+            btn.style.background = '#10B981';
+            setTimeout(() => { btn.innerHTML = origHTML; btn.style.background = ''; }, 2000);
+        };
+
+        // ===== QUICK ORDER =====
+        window.submitQuickOrder = async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+            const productTitle = document.getElementById('productTitle').textContent;
+            const qty = parseInt(document.getElementById('qtyInput')?.value) || 1;
+
+            const colorEl = document.querySelector('.color-choice.selected');
+            const sizeEl = document.querySelector('.size-btn.selected');
+            const color = colorEl ? (colorEl.getAttribute('title') || colorEl.dataset.color) : null;
+            const size = sizeEl ? sizeEl.dataset.size : null;
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="material-icons-outlined" style="animation:spin 1s linear infinite;font-size:1.125rem;">sync</span> جاري الإرسال...';
+
+            try {
+                const response = await fetch('/api/orders/quick', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: data.name, surname: data.surname, phone: data.phone, wilaya: data.wilaya,
+                        productId, productTitle, quantity: qty, color, size,
+                        options: {
+                            collar: document.querySelector('input[name="collar"]:checked')?.value,
+                            button: document.querySelector('input[name="button"]:checked')?.value,
+                            sleeve: document.querySelector('input[name="sleeve"]:checked')?.value
+                        }
+                    })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    submitBtn.innerHTML = '<span class="material-icons-outlined">check</span> تم بنجاح!';
+                    submitBtn.style.background = '#10B981';
+                    alert(`تم استلام طلبك بنجاح! رقم الطلب: ${result.data.orderNumber}\nسنتواصل معك قريباً.`);
+                    form.reset();
+                    setTimeout(() => { submitBtn.innerHTML = originalText; submitBtn.style.background = ''; submitBtn.disabled = false; }, 2000);
+                } else { throw new Error(result.message || 'حدث خطأ'); }
+            } catch (err) {
+                alert('حدث خطأ: ' + err.message);
+                submitBtn.innerHTML = originalText; submitBtn.disabled = false;
+            }
+        };
+
+        // ===== CART COUNT =====
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('elfakher_cart') || '[]');
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            document.querySelectorAll('.cart-badge').forEach(b => {
+                b.textContent = count;
+                b.style.display = count > 0 ? 'flex' : 'none';
+            });
+        }
+        updateCartCount();
+
+        // ===== LOAD PRODUCT =====
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (!id) { window.location.href = 'products.html'; return; }
+
+            try {
+                const res = await fetch(`/api/products/${id}`);
+                const json = await res.json();
+
+                if (!json.success) {
+                    document.getElementById('loading').innerHTML = '<p style="color:var(--error);">المنتج غير موجود</p>';
+                    return;
+                }
+
+                const optRes = await fetch('/api/settings/tailoring/options');
+                const optJson = await optRes.json();
+                const p = json.data;
+
+                // Title
+                document.title = `${p.name_ar || p.name_en} | ELFAKHER`;
+                document.getElementById('breadcrumbTitle').textContent = p.name_ar || p.name_en;
+                document.getElementById('productTitle').textContent = p.name_ar || p.name_en;
+                document.getElementById('productDesc').textContent = p.full_description || p.short_description || 'لا يوجد وصف متاح.';
+
+                // Price
+                const currentPrice = p.sale_price || p.base_price;
+                window.productPrice = parseFloat(currentPrice) || 0;
+                document.getElementById('productPrice').textContent = formatProductPrice(currentPrice);
+                if (p.sale_price && p.sale_price < p.base_price) {
+                    document.getElementById('productPriceOld').textContent = formatProductPrice(p.base_price);
+                    document.getElementById('productPriceOld').style.display = 'inline';
+                    const disc = Math.round((1 - p.sale_price / p.base_price) * 100);
+                    document.getElementById('productDiscount').textContent = `-${disc}%`;
+                    document.getElementById('productDiscount').style.display = 'inline';
+                }
+
+                // Stock
+                const stockEl = document.getElementById('stockStatus');
+                const qtyDisp = document.getElementById('qtyDisplay');
+                const addBtn = document.getElementById('addToCartBtn');
+                if (p.status === 'out_of_stock') {
+                    qtyDisp.textContent = 'نفذت الكمية';
+                    stockEl.className = 'stock-info out-stock';
+                    stockEl.querySelector('.material-icons-outlined').textContent = 'cancel';
+                    addBtn.disabled = true;
+                    addBtn.innerHTML = '<span class="material-icons-outlined">block</span> غير متاح حالياً';
+                } else {
+                    qtyDisp.textContent = 'متوفر';
+                    stockEl.className = 'stock-info in-stock';
+                }
+
+                // Images
+                window.productImages = p.images || [];
+                window.imageColorLinkingEnabled = p.image_color_linking_enabled || false;
+                let images = (p.images && p.images.length > 0)
+                    ? p.images.map(img => (typeof img === 'string' ? img : img.url))
+                    : ['../assets/logo.png'];
+                renderMainMedia(images[0]);
+
+                const thumbsContainer = document.getElementById('thumbnails');
+                if (images.length > 1) {
+                    thumbsContainer.innerHTML = images.map((src, idx) => {
+                        const isVideo = src.startsWith('data:video') || src.endsWith('.mp4') || src.endsWith('.webm');
+                        const content = isVideo
+                            ? `<div style="width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;color:white;"><span class="material-icons-outlined" style="font-size:1rem;">videocam</span></div>`
+                            : `<img src="${src}" alt="">`;
+                        return `<div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeImage(this, '${src}')">${content}</div>`;
+                    }).join('');
+                } else { thumbsContainer.style.display = 'none'; }
+
+                // Colors
+                window.sizeColorAvailability = p.size_color_availability || {};
+                window.productColors = p.colors || [];
+                const colorsSection = document.getElementById('colorsSection');
+                const colorOptions = document.getElementById('colorOptions');
+                if (p.colors && p.colors.length > 0) {
+                    colorsSection.style.display = 'block';
+                    colorOptions.innerHTML = p.colors.map((c, idx) => `
+                        <div class="color-choice ${idx === 0 ? 'selected' : ''}"
+                             onclick="selectColor(this)"
+                             data-color="${c.name_ar}" data-color-id="${c.id}"
+                             style="background:${c.hex_code};"
+                             title="${c.name_ar}"></div>
+                    `).join('');
+                    document.getElementById('colorName').textContent = p.colors[0].name_ar;
+                }
+
+                // Sizes
+                const sizesSection = document.getElementById('sizesSection');
+                const sizeGrid = document.getElementById('sizeGrid');
+                if (p.sizes && p.sizes.length > 0) {
+                    sizesSection.style.display = 'block';
+                    p.sizes.sort((a, b) => parseInt(a.size_number) - parseInt(b.size_number));
+                    sizeGrid.innerHTML = p.sizes.map(s => `
+                        <div class="size-btn" onclick="selectSize(this)" data-size="${s.size_number}" data-size-id="${s.id}">${s.size_number}</div>
+                    `).join('');
+                    if (sizeGrid.firstElementChild) selectSize(sizeGrid.firstElementChild);
+                }
+
+                // Wilayas for Quick Order
+                const wilayaSelect = document.querySelector('.wilaya-select');
+                if (wilayaSelect) {
+                    try {
+                        const wilayaRes = await fetch('/api/settings/shipping/wilayas');
+                        const wilayaJson = await wilayaRes.json();
+                        if (wilayaJson.success) {
+                            wilayaSelect.innerHTML = '<option value="">اختر الولاية</option>' +
+                                wilayaJson.data.map(w => `<option value="${w.code}">${w.code} - ${w.name_ar}</option>`).join('');
+                        }
+                    } catch(e) { console.error('Error loading wilayas:', e); }
+                }
+
+                // Show product
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('productLayout').style.display = 'grid';
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loading').innerHTML = '<p style="color:var(--error);">حدث خطأ في تحميل الصفحة</p>';
+            }
+        });
+    </script>
+</body>
+</html>

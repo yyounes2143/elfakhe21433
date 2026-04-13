@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب | الفاخر للقميص والثياب</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Colors - Premium Palette */
+            --bg: #F5F0EB;
+            --bg-card: #FFFFFF;
+            --bg-dark: #1A232E;
+            --bg-dark-light: #243040;
+
+            --primary: #C5A16F;
+            --primary-light: #D4B68C;
+            --accent: #121619;
+            --text-primary: #121619;
+            --text-secondary: #5C5F62;
+            --text-light: #94A3B8;
+            --border: #E5E7EB;
+            --border-light: #F3F4F6;
+            --success: #10B981;
+            --error: #EF4444;
+            
+            /* Shadows & Radius */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.08);
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 20px;
+            --radius-full: 999px;
+            
+            /* Typography */
+            --font-arabic: 'Cairo', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+        }
+
+        .dark {
+            --bg: #0F1419;
+            --bg-card: #1A232E;
+            --bg-dark: #0A0F14;
+            --bg-dark-light: #243040;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --text-light: #6B7280;
+            --border: #2D3A4A;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.4);
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: var(--font-arabic);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+
+        
+        
+        /* ========================================
+           HEADER & NAVIGATION (UNIFIED)
+           ======================================== */
+        .app-header {
+            position: sticky; top: 0; z-index: 999;
+            background: var(--bg); padding: 1rem 1.25rem;
+            transition: box-shadow 0.3s, background 0.3s;
+            border-bottom: none; /* User requirement: no borders */
+        }
+        .app-header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1280px; margin: 0 auto; width: 100%;
+        }
+
+        /* Mobile Greeting */
+        .store-greeting { display: flex; flex-direction: column; }
+        .store-greeting small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+        .store-greeting h1 { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text-primary); margin: 0; line-height: 1.2; }
+
+        /* Desktop Logo */
+        .header-logo { display: none; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .header-logo img { height: 2.75rem !important; width: auto !important; max-width: 100px; object-fit: contain; }
+        .header-logo-text { display: flex; flex-direction: column; }
+        .header-logo-text .brand-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+        .header-logo-text .brand-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #C19A5B; }
+
+        /* Desktop Navigation */
+        .desktop-nav { display: none; align-items: center; gap: 1rem; }
+        .desktop-nav a {
+            text-decoration: none; font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary);
+            padding: 0.5rem 1.25rem; border-radius: var(--radius-full); transition: all 0.3s ease; background: transparent;
+        }
+        .desktop-nav a:hover { color: white; background: rgba(193, 154, 91, 0.7); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(193, 154, 91, 0.2); }
+        .desktop-nav a.active { color: var(--bg-card); background: #C19A5B; font-weight: 800; box-shadow: 0 4px 12px rgba(193, 154, 91, 0.3); }
+
+        /* Actions */
+        .header-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .icon-circle {
+            width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; background: var(--bg-card); color: var(--text-primary);
+            transition: all 0.2s; position: relative; text-decoration: none; cursor: pointer;
+        }
+        .icon-circle:hover { background: var(--bg-dark); color: white; border-color: var(--bg-dark); }
+        .icon-circle .material-icons-outlined { font-size: 1.375rem; }
+
+        /* Cart Badge */
+        .cart-count, .cart-badge {
+            position: absolute !important; top: -2px !important; right: -2px !important; 
+            min-width: 1.125rem !important; height: 1.125rem !important;
+            background: #C19A5B !important; color: white !important; 
+            font-size: 0.625rem !important; font-weight: 700 !important;
+            border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important;
+            border: none !important; margin: 0 !important; padding: 0 !important;
+        }
+
+        /* Desktop Header Layout Restraints */
+        @media (min-width: 768px) {
+            .app-header { padding: 1rem 2rem; }
+            .store-greeting { display: none !important; }
+            .header-logo { display: flex !important; }
+            .desktop-nav { display: flex !important; }
+            .header-actions { justify-content: flex-end; }
+        }
+        @media (min-width: 1024px) {
+            .app-header { padding: 1rem 3rem; }
+        }
+
+
+        /* ========================================
+           CHECKOUT SECTION (PREMIUM GLASSMORPHISM)
+           ======================================== */
+        .checkout-hero { padding: 3rem 0; position: relative; z-index: 2; }
+        .checkout-hero h1 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            padding-bottom: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .premium-glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark .premium-glass-card {
+            background: rgba(26, 35, 46, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .premium-glass-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1); }
+        .dark .premium-glass-card:hover { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+
+        .form-section-title {
+            font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.75rem; color: var(--text-primary);
+        }
+        .form-section-title .step-icon {
+            width: 2.5rem; height: 2.5rem;
+            background: rgba(197, 161, 111, 0.15); color: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .input-group { position: relative; margin-bottom: 1.5rem; }
+
+        .form-label {
+            display: block; font-size: 0.875rem; font-weight: 700;
+            margin-bottom: 0.5rem; color: var(--text-secondary); transition: color 0.3s;
+        }
+
+        .premium-input {
+            width: 100%; padding: 1.25rem;
+            background: rgba(0, 0, 0, 0.02);
+            border: 2px solid transparent; border-radius: var(--radius);
+            color: var(--text-primary); font-family: inherit; font-size: 1rem; font-weight: 500;
+            transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .dark .premium-input {
+            background: rgba(0, 0, 0, 0.2); color: white;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .premium-input:focus {
+            outline: none; background: var(--bg-card); border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(197, 161, 111, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .input-group:focus-within .form-label { color: var(--primary); }
+
+        .submit-btn {
+            width: 100%; padding: 1.25rem;
+            background: var(--primary); color: white;
+            border: none; border-radius: var(--radius);
+            font-size: 1.125rem; font-weight: 800; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            margin-top: 1rem; position: relative; overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg); transition: all 0.5s; opacity: 0;
+        }
+
+        .submit-btn:hover { background: var(--primary-light); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(197, 161, 111, 0.3); }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:hover::after { opacity: 1; left: 100%; }
+        .submit-btn:disabled { background: var(--border); color: var(--text-muted); transform: none; box-shadow: none; cursor: not-allowed; }
+
+        /* Order Summary Card */
+        .order-summary {
+            position: sticky; top: 6rem;
+            height: fit-content;
+        }
+        
+        .order-summary::before {
+            content: ''; position: absolute; bottom: -50px; left: -50px;
+            width: 150px; height: 150px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--bg-dark), transparent);
+            opacity: 0.1; filter: blur(20px);
+        }
+        
+        .dark .order-summary::before { background: linear-gradient(135deg, var(--primary), transparent); opacity: 0.05; }
+
+        .summary-item {
+            display: flex; gap: 1rem; padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .dark .summary-item { border-bottom-color: rgba(255,255,255,0.05); }
+
+        .summary-item-image {
+            width: 70px; height: 90px; border-radius: var(--radius-sm);
+            overflow: hidden; background: rgba(0,0,0,0.05); flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .summary-item-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .summary-row { display: flex; justify-content: space-between; padding: 0.75rem 0; color: var(--text-secondary); font-weight: 500; }
+        .summary-row.total {
+            font-size: 1.5rem; font-weight: 800; color: var(--primary);
+            border-top: 2px dashed rgba(0,0,0,0.1); margin-top: 1rem; padding-top: 1.5rem;
+        }
+        .dark .summary-row.total { border-top-color: rgba(255,255,255,0.1); }
+
+        @media (max-width: 1024px) {
+            .checkout-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .order-summary { order: -1; position: relative; top: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-hero { padding: 2rem 0; }
+            .checkout-hero h1 { font-size: 2rem; }
+            .premium-glass-card { padding: 1.5rem; border-radius: 20px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+        }
+
+        /* ========================================
+           BOTTOM NAV (INTERACTIVE)
+           ======================================== */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+            background: var(--bg-dark);
+            border-radius: var(--radius-xl, 20px) var(--radius-xl, 20px) 0 0;
+            padding: 0.75rem 1.5rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
+            display: flex; align-items: center; justify-content: space-around;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 0.25rem; padding: 0.5rem 1rem; border-radius: var(--radius, 12px);
+            transition: all 0.2s; color: rgba(255,255,255,0.5); position: relative; text-decoration: none;
+        }
+        .nav-item:hover { color: rgba(255,255,255,0.8); }
+        .nav-item.active { color: white; background: rgba(255,255,255,0.1); }
+        .nav-item .material-icons-outlined { font-size: 1.5rem; }
+        .nav-item .nav-label { font-size: 0.625rem; font-weight: 600; }
+
+        .nav-badge {
+            position: absolute; top: -5px; right: 20%;
+            background: var(--primary); color: white; font-size: 10px; font-weight: 800;
+            min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @media (min-width: 769px) {
+            .app-header .header-logo, .app-header .desktop-nav { display: flex; }
+            .app-header .store-greeting { display: none; }
+            .bottom-nav { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+            <!-- ======== HEADER ======== -->
+    <header class="app-header" id="appHeader">
+        <div class="header-row">
+            <!-- Mobile: Store Greeting -->
+            <div class="store-greeting">
+                <small>مرحباً بك في</small>
+                <h1>ELFAKHER</h1>
+            </div>
+
+            <!-- Desktop: Logo (Right RTL) -->
+            <a href="index.html" class="header-logo">
+                <img src="../assets/logo.png" alt="ELFAKHER">
+                <div class="header-logo-text">
+                    <span class="brand-name">ELFAKHER</span>
+                    <span class="brand-tag">Fabrics</span>
+                </div>
+            </a>
+
+            <!-- Desktop: Navigation (Center RTL) -->
+            <nav class="desktop-nav">
+                <a href="index.html" class="">الرئيسية</a>
+                <a href="products.html" class="">المنتجات</a>
+                <a href="contact.html" class="">اتصل بنا</a>
+            </nav>
+
+            <!-- Actions (Left RTL) -->
+            <div class="header-actions">
+                
+                <button class="icon-circle" style="visibility: hidden;" aria-hidden="true" disabled>
+                    <span class="material-icons-outlined">search</span>
+                </button>
+                <a href="cart.html" class="icon-circle" aria-label="السلة">
+                    <span class="material-icons-outlined">shopping_bag</span>
+                    <span class="cart-count cart-badge" style="display:none;">0</span>
+                </a>
+                <button class="icon-circle" id="darkModeToggle" aria-label="الوضع المظلم">
+                    <span class="material-icons-outlined">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="checkout-hero">
+            <div class="container">
+                <h1>إتمام الطلب</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="checkout-grid">
+                
+                <!-- Checkout Form -->
+                <form id="checkoutForm">
+                    <div class="premium-glass-card">
+                        <h2 class="form-section-title">
+                            <span class="step-icon"><span class="material-icons-outlined">local_shipping</span></span>
+                            معلومات الشحن
+                        </h2>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label class="form-label">الاسم الأول *</label>
+                                <input type="text" class="premium-input" name="firstName" placeholder="الاسم" required>
+                            </div>
+                            <div class="input-group">
+                                <label class="form-label">اللقب *</label>
+                                <input type="text" class="premium-input" name="lastName" placeholder="اللقب" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="form-label">رقم الهاتف *</label>
+                            <input type="tel" class="premium-input" name="phone" placeholder="مثال: 0550123456" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="form-label">الولاية *</label>
+                            <select class="premium-input wilaya-select" name="wilaya" required style="cursor: pointer;">
+                                <option value="" disabled selected>اختر الولاية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="form-label">العنوان التفصيلي (اختياري)</label>
+                            <input type="text" class="premium-input" name="address" placeholder="الحي، الشارع، ورقم المبنى">
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="checkoutBtn">
+                            <span>تأكيد الطلب</span>
+                            <span class="material-icons-outlined">check_circle</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Order Summary -->
+                <div class="premium-glass-card order-summary" id="orderSummary">
+                    <h3 style="font-size:1.5rem;font-weight: 800; margin-bottom:1.5rem; color: var(--text-primary);">ملخص الطلب</h3>
+                    <div id="summaryItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <div class="summary-row">
+                            <span>المجموع الفرعي</span>
+                            <span id="subtotalDisplay">0 دج</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>الشحن</span>
+                            <span style="color:var(--success);font-weight:700;">مجاني</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>الإجمالي</span>
+                            <span id="totalDisplay">0 دج</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ======== BOTTOM NAV (INTERACTIVE) ======== -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="material-icons-outlined">home</span>
+            <span class="nav-label">الرئيسية</span>
+        </a>
+        <a href="products.html" class="nav-item">
+            <span class="material-icons-outlined">grid_view</span>
+            <span class="nav-label">التصنيفات</span>
+        </a>
+        <a href="cart.html" class="nav-item">
+            <span class="material-icons-outlined">shopping_bag</span>
+            <span class="nav-label">السلة</span>
+            <span class="nav-badge cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="contact.html" class="nav-item">
+            <span class="material-icons-outlined">call</span>
+            <span class="nav-label">اتصل بنا</span>
+        </a>
+    </nav>
+    <div style="height: 80px;"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // UI logo inversion logic
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if(mutation.attributeName === "class") {
+                    const logos = document.querySelectorAll('.dark-invert');
+                    const isDark = document.documentElement.classList.contains('dark');
+                    logos.forEach(logo => {
+                        logo.style.filter = isDark ? 'brightness(0) invert(1)' : 'brightness(0) saturate(100%) invert(14%) sepia(21%) saturate(541%) hue-rotate(167deg) brightness(93%) contrast(92%)';
+                    });
+                }
+            });
+        });
+        observer.observe(document.documentElement, {attributes: true});
+        
+        if(document.documentElement.classList.contains('dark')) {
+             document.querySelectorAll('.dark-invert').forEach(logo => {
+                  logo.style.filter = 'brightness(0) invert(1)';
+             });
+        }
+
+        // Checkout logic
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartSummary();
+            setupCheckoutForm();
+        });
+
+        function loadCartSummary() {
+            const cartKey = 'elfakher_cart';
+            const cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+            const summaryItems = document.getElementById('summaryItems');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+            const totalDisplay = document.getElementById('totalDisplay');
+
+            if (cart.length === 0) {
+                summaryItems.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:2rem;">السلة فارغة</p>';
+                return;
+            }
+
+            let subtotal = 0;
+            let html = '';
+
+            cart.forEach(item => {
+                const itemTotal = (item.price || 0) * (item.quantity || 1);
+                subtotal += itemTotal;
+                html += `
+                    <div class="summary-item">
+                        <div class="summary-item-image">
+                            <img src="${item.image || '/assets/placeholder.png'}" alt="${item.title}">
+                        </div>
+                        <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+                            <p style="font-weight:700; font-size: 1rem; color: var(--text-primary); margin-bottom: 0.2rem;">${item.title}</p>
+                            <p style="font-size:0.875rem; color:var(--text-secondary); font-weight: 600;">×${item.quantity || 1}</p>
+                        </div>
+                        <div style="display:flex; align-items:center;">
+                           <span style="font-weight:800; color: var(--primary);">${itemTotal.toLocaleString('ar-DZ')} دج</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            summaryItems.innerHTML = html;
+            subtotalDisplay.textContent = subtotal.toLocaleString('ar-DZ') + ' دج';
+            totalDisplay.textContent = subtotal.toLocaleString('ar-DZ') + ' دج';
+        }
+
+        function setupCheckoutForm() {
+            const form = document.getElementById('checkoutForm');
+            const btn = document.getElementById('checkoutBtn');
+
+            form?.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                const cart = JSON.parse(localStorage.getItem('elfakher_cart') || '[]');
+
+                if (cart.length === 0) {
+                    alert('السلة فارغة!');
+                    return;
+                }
+
+                const originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="material-icons-outlined" style="animation:spin 1s linear infinite">sync</span> <span>جاري الإرسال...</span>';
+
+                try {
+                    console.log('📤 Submitting checkout:', data);
+                    const response = await fetch('/api/orders/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            phone: data.phone,
+                            wilaya: data.wilaya,
+                            address: data.address,
+                            cartItems: cart
+                        })
+                    });
+
+                    const result = await response.json();
+                    console.log('📥 Response:', result);
+
+                    if (result.success) {
+                        // Clear cart
+                        localStorage.removeItem('elfakher_cart');
+
+                        // Show success
+                        alert(`تم إنشاء طلبك بنجاح!\n\nرقم الطلب: ${result.data.orderNumber}\n\nسنتواصل معك قريباً للتأكيد.`);
+
+                        // Redirect to home
+                        window.location.href = 'index.html';
+                    } else {
+                        throw new Error(result.message || 'حدث خطأ');
+                    }
+                } catch (err) {
+                    console.error('Checkout error:', err);
+                    alert('حدث خطأ: ' + err.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

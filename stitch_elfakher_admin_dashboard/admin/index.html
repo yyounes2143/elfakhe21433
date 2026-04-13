@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | ELFAKHER Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body style="background:var(--admin-bg);">
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo"><img src="../assets/logo.png" alt="ELFAKHER"><span
+                        class="sidebar-logo-text">ELFAKHER</span></a>
+                <button class="mobile-close-btn" onclick="closeSidebar()"
+                    style="display:none;background:none;border:none;color:var(--admin-muted);cursor:pointer;">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item active"><span class="material-icons-outlined">dashboard</span> لوحة التحكم</a>
+                <a href="orders.html" class="nav-item"><span class="material-icons-outlined">shopping_cart</span> الطلبات <span class="badge">12</span></a>
+                <a href="products.html" class="nav-item"><span class="material-icons-outlined">inventory_2</span> المنتجات</a>
+                <a href="tailoring.html" style="display:none;" class="nav-item"><span class="material-icons-outlined">content_cut</span> خيارات التفصيل</a>
+                <a href="archive.html" class="nav-item"><span class="material-icons-outlined">inventory</span> الأرشيف</a>
+                <a href="settings.html" class="nav-item"><span class="material-icons-outlined">settings</span> الإعدادات</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">م</div>
+                    <div><strong style="font-size:0.875rem;">المدير</strong>
+                        <p style="font-size:0.75rem;color:var(--admin-muted);">مدير النظام</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <button class="mobile-menu-btn" onclick="openSidebar()">
+                        <span class="material-icons-outlined">menu</span>
+                    </button>
+                    <div>
+                        <h1 class="page-title">مرحباً، المدير 👋</h1>
+                        <p class="page-subtitle">إليك ملخص نشاط متجرك اليوم</p>
+                    </div>
+                </div>
+                <div style="display:flex;gap:1rem;align-items:center;">
+                    <button class="btn-admin-icon" id="darkModeToggle"><span
+                            class="material-icons-outlined">dark_mode</span></button>
+                    <button class="btn-admin-icon"><span class="material-icons-outlined">notifications</span></button>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>المبيعات (الشهر)</h3>
+                            <div class="value" id="stat-month-revenue">-</div>
+                            <p style="font-size:0.75rem;color:var(--admin-muted);margin-top:0.25rem;">إجمالي الشهر</p>
+                        </div>
+                        <div class="stat-icon green"><span class="material-icons-outlined">trending_up</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>طلبات معلقة</h3>
+                            <div class="value" id="stat-pending-orders">-</div>
+                            <p style="font-size:0.75rem;color:var(--admin-muted);margin-top:0.25rem;">تحتاج متابعة</p>
+                        </div>
+                        <div class="stat-icon orange"><span class="material-icons-outlined">pending</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>إجمالي الطلبات</h3>
+                            <div class="value" id="stat-total-orders">-</div>
+                            <p style="font-size:0.75rem;color:var(--admin-muted);margin-top:0.25rem;">كل الطلبات</p>
+                        </div>
+                        <div class="stat-icon purple"><span class="material-icons-outlined">receipt_long</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>أجمالي العملاء</h3>
+                            <div class="value" id="stat-total-customers">-</div>
+                            <p style="font-size:0.75rem;color:var(--admin-muted);margin-top:0.25rem;">عميل مسجل</p>
+                        </div>
+                        <div class="stat-icon blue"><span class="material-icons-outlined">people</span></div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;" class="dashboard-grid">
+                    <!-- Recent Orders -->
+                    <div class="data-table-wrapper">
+                        <div class="table-header">
+                            <h2 class="table-title">آخر الطلبات</h2>
+                            <a href="orders.html" class="btn-admin btn-admin-outline">عرض الكل</a>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>العميل</th>
+                                    <th>المبلغ</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders">
+                                <!-- تُحمَّل الطلبات من الـ API -->
+                                <tr>
+                                    <td colspan="4" style="text-align:center;padding:2rem;color:var(--admin-muted);">
+                                        جاري تحميل البيانات...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="data-table-wrapper" style="padding:1.5rem;">
+                        <h2 class="table-title" style="margin-bottom:1.5rem;">إجراءات سريعة</h2>
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                            <a href="products.html" class="btn-admin btn-admin-outline"
+                                style="justify-content:flex-start;padding:1rem;"><span class="material-icons-outlined"
+                                    style="color:var(--admin-accent);">add_box</span> إضافة منتج جديد</a>
+                            <a href="orders.html" class="btn-admin btn-admin-outline"
+                                style="justify-content:flex-start;padding:1rem;"><span class="material-icons-outlined"
+                                    style="color:var(--admin-accent);">list_alt</span> مراجعة الطلبات المعلقة</a>
+                            <a href="customers.html" class="btn-admin btn-admin-outline"
+                                style="justify-content:flex-start;padding:1rem;"><span class="material-icons-outlined"
+                                    style="color:var(--admin-accent);">campaign</span> إرسال إشعار للعملاء</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin-api.js"></script>
+    <script>
+        // Mobile Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function openSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+    <style>
+        /* ========================================
+           Mobile Responsive Styles for Dashboard
+           ======================================== */
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: var(--admin-surface);
+            border: 1px solid var(--admin-border);
+            color: var(--admin-text);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+
+            .mobile-close-btn {
+                display: block !important;
+            }
+
+            .sidebar-header {
+                justify-content: space-between;
+            }
+
+            /* Dashboard Grid - Stack on tablet */
+            .dashboard-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+
+            /* Header Mobile Adjustments */
+            .admin-header {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+                height: auto;
+            }
+
+            .admin-header>div:first-of-type {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .page-title {
+                font-size: 1.125rem;
+            }
+
+            .page-subtitle {
+                font-size: 0.75rem;
+            }
+
+            /* Orders Table Mobile - Card Layout */
+            .data-table {
+                display: block;
+            }
+
+            .data-table thead {
+                display: none;
+            }
+
+            .data-table tbody {
+                display: block;
+            }
+
+            .data-table tr {
+                display: block;
+                background: var(--admin-surface);
+                border: 1px solid var(--admin-border);
+                border-radius: 0.75rem;
+                margin-bottom: 0.75rem;
+                padding: 1rem;
+            }
+
+            .data-table tr:hover {
+                background: var(--admin-surface);
+            }
+
+            .data-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.375rem 0;
+                border-bottom: 1px solid var(--admin-border);
+                font-size: 0.875rem;
+            }
+
+            .data-table td:last-child {
+                border-bottom: none;
+                padding-top: 0.5rem;
+            }
+
+            .data-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--admin-muted);
+                font-size: 0.75rem;
+            }
+
+            .data-table td:first-child {
+                border-bottom: none;
+                padding-bottom: 0.25rem;
+            }
+
+            .data-table td:first-child::before {
+                display: none;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .admin-header>div:last-child {
+                gap: 0.5rem;
+            }
+
+            .admin-header .btn-admin-icon {
+                width: 2.25rem;
+                height: 2.25rem;
+            }
+
+            /* Stats Grid - 2 columns on small mobile */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 0.875rem;
+            }
+
+            .stat-info h3 {
+                font-size: 0.6875rem;
+            }
+
+            .stat-info .value {
+                font-size: 1.125rem;
+            }
+
+            .stat-icon {
+                width: 2.25rem;
+                height: 2.25rem;
+            }
+
+            .stat-icon .material-icons-outlined {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</body>
+
+</html>

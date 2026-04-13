@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات | ELFAKHER Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .settings-nav {
+            background: var(--admin-surface);
+            border: 1px solid var(--admin-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 0.5rem;
+            color: var(--admin-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+        }
+
+        .settings-nav-item:hover {
+            background: var(--admin-bg);
+            color: var(--admin-text);
+        }
+
+        .settings-nav-item.active {
+            background: var(--admin-primary);
+            color: white;
+        }
+
+        .settings-section {
+            background: var(--admin-surface);
+            border: 1px solid var(--admin-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .settings-section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-section-desc {
+            font-size: 0.875rem;
+            color: var(--admin-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--admin-border);
+            border-radius: 0.5rem;
+            background: var(--admin-bg);
+            font-size: 0.9375rem;
+            color: var(--admin-text);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--admin-accent);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--admin-muted);
+            margin-top: 0.25rem;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--admin-bg);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .toggle-label {
+            font-size: 0.875rem;
+        }
+
+        .toggle-desc {
+            font-size: 0.75rem;
+            color: var(--admin-muted);
+            margin-top: 0.25rem;
+        }
+
+        .toggle {
+            width: 3rem;
+            height: 1.5rem;
+            background: var(--admin-border);
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toggle.active {
+            background: var(--admin-accent);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: white;
+            border-radius: 50%;
+            top: 0.125rem;
+            right: 0.125rem;
+            transition: right 0.2s;
+        }
+
+        .toggle.active::after {
+            right: 1.625rem;
+        }
+
+        .shipping-zones {
+            margin-top: 1rem;
+        }
+
+        .zone-card {
+            background: var(--admin-bg);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .zone-info h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .zone-info p {
+            font-size: 0.75rem;
+            color: var(--admin-muted);
+        }
+
+        .zone-price {
+            font-weight: 700;
+            color: var(--admin-accent);
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--admin-bg);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .payment-method-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--admin-surface);
+            border: 1px solid var(--admin-border);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon .material-icons-outlined {
+            font-size: 1.5rem;
+            color: var(--admin-accent);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--admin-bg);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 3rem;
+            height: 3rem;
+            background: var(--admin-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--admin-muted);
+        }
+
+        .save-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--admin-border);
+        }
+
+        .logo-upload {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed var(--admin-border);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-upload-btn {
+            cursor: pointer;
+        }
+
+        @media (max-width:1024px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-nav {
+                position: static;
+                display: flex;
+                overflow-x: auto;
+                gap: 0.5rem;
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .settings-nav-item {
+                flex-shrink: 0;
+                white-space: nowrap;
+                padding: 0.75rem 1rem;
+                margin-bottom: 0;
+            }
+        }
+
+        /* ========================================
+           Mobile Responsive Styles for Settings
+           ======================================== */
+
+        /* Mobile Menu Button - Hidden by default */
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: var(--admin-surface);
+            border: 1px solid var(--admin-border);
+            color: var(--admin-text);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+
+            /* Header Mobile Adjustments */
+            .admin-header {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+                height: auto;
+            }
+
+            .admin-header>div:first-child {
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Settings Section Mobile */
+            .settings-section {
+                padding: 1.25rem;
+            }
+
+            .settings-section-title {
+                font-size: 1rem;
+            }
+
+            .settings-section-desc {
+                font-size: 0.8125rem;
+            }
+
+            /* Form Mobile */
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-label {
+                font-size: 0.8125rem;
+            }
+
+            .form-input {
+                padding: 0.625rem 0.875rem;
+                font-size: 1rem;
+                /* Prevent zoom on iOS */
+            }
+
+            /* Logo Upload Mobile */
+            .logo-upload {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .logo-preview {
+                width: 80px;
+                height: 80px;
+            }
+
+            /* Toggle Switch Mobile */
+            .toggle-switch {
+                padding: 0.875rem;
+            }
+
+            .toggle-label {
+                font-size: 0.8125rem;
+            }
+
+            .toggle-desc {
+                font-size: 0.6875rem;
+            }
+
+            /* Zone Card Mobile */
+            .zone-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .zone-card>div:last-child {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            /* Payment Method Mobile */
+            .payment-method {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .payment-method-info {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .payment-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            .payment-icon .material-icons-outlined {
+                font-size: 1.25rem;
+            }
+
+            /* User Card Mobile */
+            .user-card {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .user-info {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .user-avatar {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 0.875rem;
+            }
+
+            /* Save Bar Mobile */
+            .save-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .save-bar .btn-admin {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Modal Responsive */
+            .modal-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
+
+            .modal-container {
+                max-width: 100% !important;
+                max-height: 95vh;
+                border-radius: 1rem 1rem 0 0;
+                margin-top: auto;
+            }
+
+            .modal-header {
+                padding: 1rem;
+                position: sticky;
+                top: 0;
+                background: var(--admin-surface);
+                z-index: 10;
+            }
+
+            .modal-header h2 {
+                font-size: 1rem;
+                gap: 0.5rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-footer {
+                padding: 0.75rem 1rem;
+                position: sticky;
+                bottom: 0;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-footer .btn-admin {
+                width: 100%;
+                justify-content: center;
+                padding: 0.75rem;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .settings-nav {
+                padding: 0.5rem;
+            }
+
+            .settings-nav-item {
+                padding: 0.625rem 0.75rem;
+                font-size: 0.8125rem;
+            }
+
+            .settings-nav-item .material-icons-outlined {
+                font-size: 1.125rem;
+            }
+
+            .settings-section {
+                padding: 1rem;
+            }
+
+            .settings-section-title {
+                font-size: 0.9375rem;
+            }
+
+            .zone-info h4 {
+                font-size: 0.875rem;
+            }
+
+            .zone-info p {
+                font-size: 0.6875rem;
+            }
+        }
+
+        /* ========== Focus Ring ========== */
+        .form-input:focus {
+            outline: none;
+            border-color: var(--admin-accent);
+            box-shadow: 0 0 0 3px rgba(193, 154, 91, 0.12);
+        }
+
+        /* ========== Toast Notifications ========== */
+        .toast-container {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            pointer-events: auto;
+            animation: toastIn 0.4s cubic-bezier(.4, 0, .2, 1) both;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 280px;
+        }
+
+        .toast.toast-out {
+            animation: toastOut 0.3s ease both;
+        }
+
+        .toast-success {
+            background: #064E3B;
+            color: #D1FAE5;
+        }
+
+        .toast-error {
+            background: #7F1D1D;
+            color: #FEE2E2;
+        }
+
+        .toast-close {
+            margin-right: auto;
+            background: none;
+            border: none;
+            color: inherit;
+            opacity: 0.7;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+        }
+
+        .toast-close:hover {
+            opacity: 1;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        /* ========== Category Add Form ========== */
+        .category-add-form {
+            background: var(--admin-bg);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--admin-border);
+        }
+
+        .category-add-form h3 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-add-form h3 .material-icons-outlined {
+            font-size: 1.125rem;
+            color: var(--admin-accent);
+        }
+
+        /* ========== Wilaya Row ========== */
+        .wilaya-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            background: var(--admin-bg);
+            border-radius: 0.5rem;
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+
+        .wilaya-row:hover {
+            background: var(--admin-surface);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .wilaya-code {
+            font-weight: 600;
+            min-width: 2rem;
+            text-align: center;
+            color: var(--admin-accent);
+        }
+
+        .wilaya-name {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        .wilaya-price-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .wilaya-price-wrap input {
+            width: 100px;
+            padding: 0.375rem 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .wilaya-price-wrap span {
+            font-size: 0.75rem;
+            color: var(--admin-muted);
+        }
+
+        /* ========== Category Card Hover ========== */
+        .zone-card {
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+
+        .zone-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ========== User Card Enhancement ========== */
+        .user-card {
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+
+        .user-card:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ========== Spin Animation ========== */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body style="background:var(--admin-bg);">
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header"><a href="index.html" class="sidebar-logo"><img src="../assets/logo.png"
+                        alt="ELFAKHER"><span class="sidebar-logo-text">ELFAKHER</span></a></div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> لوحة
+                    التحكم</a>
+                <a href="orders.html" class="nav-item"><span class="material-icons-outlined">shopping_cart</span>
+                    الطلبات <span class="badge">12</span></a>
+                <a href="products.html" class="nav-item"><span class="material-icons-outlined">inventory_2</span>
+                    المنتجات</a>
+                <a href="tailoring.html" style="display:none;" class="nav-item"><span class="material-icons-outlined">content_cut</span>
+                    خيارات التفصيل</a>
+                <a href="archive.html" class="nav-item"><span class="material-icons-outlined">inventory</span> الأرشيف</a>
+                <a href="settings.html" class="nav-item active"><span class="material-icons-outlined">settings</span>
+                    الإعدادات</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">م</div>
+                    <div><strong style="font-size:0.875rem;">المدير</strong></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()"><span
+                            class="material-icons-outlined">menu</span></button>
+                    <div>
+                        <h1 class="page-title">الإعدادات</h1>
+                        <p class="page-subtitle">إعدادات المتجر والحساب والشحن</p>
+                    </div>
+                </div>
+                <button class="btn-admin-icon" id="darkModeToggle"><span
+                        class="material-icons-outlined">dark_mode</span></button>
+            </header>
+
+            <div class="admin-content">
+                <div class="settings-grid">
+                    <nav class="settings-nav">
+                        <div class="settings-nav-item active" data-section="store"><span
+                                class="material-icons-outlined">store</span> معلومات المتجر</div>
+                        <div class="settings-nav-item" data-section="shipping"><span
+                                class="material-icons-outlined">local_shipping</span> الشحن والتوصيل</div>
+                        <div class="settings-nav-item" data-section="notifications"><span
+                                class="material-icons-outlined">notifications</span> الإشعارات</div>
+                        <div class="settings-nav-item" data-section="categories"><span
+                                class="material-icons-outlined">category</span> الفئات</div>
+                        <div class="settings-nav-item" data-section="users"><span
+                                class="material-icons-outlined">admin_panel_settings</span> المستخدمين</div>
+                    </nav>
+
+                    <!-- معلومات المتجر -->
+                    <div class="settings-section active" id="store">
+                        <h2 class="settings-section-title"><span class="material-icons-outlined">store</span> معلومات
+                            المتجر</h2>
+                        <p class="settings-section-desc">المعلومات الأساسية للمتجر التي ستظهر للعملاء</p>
+
+                        <div class="logo-upload">
+                            <div class="logo-preview" id="logoPreview">
+                                <img src="../assets/logo.png" alt="Logo">
+                            </div>
+                            <div>
+                                <button class="btn-admin btn-admin-outline logo-upload-btn"
+                                    onclick="document.getElementById('logoInput').click()">
+                                    <span class="material-icons-outlined">upload</span> تغيير الشعار
+                                </button>
+                                <input type="file" id="logoInput" accept="image/*" style="display:none;">
+                                <p class="form-hint">PNG أو JPG، الحجم المثالي 200×200 بكسل</p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group"><label class="form-label">اسم المتجر</label><input type="text"
+                                    class="form-input" id="storeName"></div>
+                            <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input
+                                    type="email" class="form-input" id="storeEmail"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label class="form-label">رقم الهاتف</label><input type="tel"
+                                    class="form-input" id="storePhone"></div>
+                            <div class="form-group"><label class="form-label">رقم واتساب</label><input type="tel"
+                                    class="form-input" id="storeWhatsapp"></div>
+                        </div>
+                        <div class="form-group"><label class="form-label">العنوان</label><input type="text"
+                                class="form-input" id="storeAddress">
+                        </div>
+                        <div class="form-group"><label class="form-label">وصف المتجر</label><textarea class="form-input"
+                                rows="3" id="storeDesc"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group"><label class="form-label">رابط فيسبوك</label><input type="url"
+                                    class="form-input" id="storeFacebook" placeholder="https://facebook.com/..."
+                                    style="direction:ltr;">
+                            </div>
+                            <div class="form-group"><label class="form-label">رابط إنستغرام</label><input type="url"
+                                    class="form-input" id="storeInstagram" placeholder="https://instagram.com/..."
+                                    style="direction:ltr;">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label class="form-label">رابط تيك توك</label><input type="url"
+                                    class="form-input" id="storeTiktok" placeholder="https://tiktok.com/@..."
+                                    style="direction:ltr;">
+                            </div>
+                            <div class="form-group"></div>
+                        </div>
+
+                        <div class="save-bar">
+                            <button class="btn-admin btn-admin-primary" onclick="saveSettings()"><span
+                                    class="material-icons-outlined">save</span> حفظ التغييرات</button>
+                            <button class="btn-admin btn-admin-outline">إلغاء</button>
+                        </div>
+                    </div>
+
+                    <!-- الشحن والتوصيل -->
+                    <div class="settings-section" id="shipping">
+                        <h2 class="settings-section-title"><span class="material-icons-outlined">local_shipping</span>
+                            الشحن والتوصيل</h2>
+                        <p class="settings-section-desc">إدارة أسعار الشحن لكل ولاية</p>
+
+                        <div style="text-align:center;padding:2rem;">
+                            <span class="material-icons-outlined"
+                                style="font-size:4rem;color:var(--admin-accent);opacity:0.5;">local_shipping</span>
+                            <p style="margin:1rem 0;color:var(--admin-muted);">يمكنك تحديد سعر الشحن لكل ولاية من خلال
+                                المودال أدناه</p>
+                            <button class="btn-admin btn-admin-primary" onclick="openWilayasModal()"
+                                style="margin-top:0.5rem;">
+                                <span class="material-icons-outlined">edit</span> إدارة أسعار الولايات
+                            </button>
+                        </div>
+
+                        <div id="wilayasSummary" style="margin-top:1rem;"></div>
+                    </div>
+
+
+
+                    <!-- الإشعارات -->
+                    <div class="settings-section" id="notifications">
+                        <h2 class="settings-section-title"><span class="material-icons-outlined">notifications</span>
+                            الإشعارات</h2>
+                        <p class="settings-section-desc">إدارة إشعارات الطلبات والتنبيهات</p>
+
+                        <div class="toggle-switch">
+                            <div>
+                                <div class="toggle-label">إشعارات الطلبات الجديدة</div>
+                                <div class="toggle-desc">تنبيه عند استلام طلب جديد</div>
+                            </div>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                        <div class="toggle-switch">
+                            <div>
+                                <div class="toggle-label">إشعارات المخزون المنخفض</div>
+                                <div class="toggle-desc">تنبيه عند انخفاض مخزون قماش</div>
+                            </div>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                        <div class="toggle-switch">
+                            <div>
+                                <div class="toggle-label">إشعار صوتي</div>
+                                <div class="toggle-desc">تشغيل صوت عند وصول إشعار</div>
+                            </div>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                        <div class="toggle-switch">
+                            <div>
+                                <div class="toggle-label">إرسال SMS للعميل</div>
+                                <div class="toggle-desc">رسالة تأكيد الطلب للعميل</div>
+                            </div>
+                            <div class="toggle" onclick="this.classList.toggle('active')"></div>
+                        </div>
+
+                        <div class="save-bar">
+                            <button class="btn-admin btn-admin-primary" onclick="saveSettings()"><span
+                                    class="material-icons-outlined">save</span> حفظ التغييرات</button>
+                        </div>
+                    </div>
+
+                    <!-- المستخدمين -->
+                    <div class="settings-section" id="users">
+                        <h2 class="settings-section-title"><span
+                                class="material-icons-outlined">admin_panel_settings</span> المستخدمين</h2>
+                        <p class="settings-section-desc">إدارة حسابات المدراء والموظفين</p>
+
+                        <button class="btn-admin btn-admin-primary" style="margin-bottom:1.5rem;"
+                            onclick="openUserModal()"><span class="material-icons-outlined">person_add</span> إضافة
+                            مستخدم</button>
+
+                        <div class="user-card">
+                            <div class="user-info">
+                                <div class="user-avatar">م</div>
+                                <div><strong>المدير العام</strong>
+                                    <p class="user-role">مدير النظام - الصلاحيات الكاملة</p>
+                                </div>
+                            </div>
+                            <span class="status-badge delivered">نشط</span>
+                        </div>
+                        <div class="user-card">
+                            <div class="user-info">
+                                <div class="user-avatar" style="background:#3B82F6;">أ</div>
+                                <div><strong>أحمد (الطلبات)</strong>
+                                    <p class="user-role">إدارة الطلبات فقط</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:0.5rem;">
+                                <span class="status-badge delivered">نشط</span>
+                                <button class="btn-admin-icon"><span
+                                        class="material-icons-outlined">edit</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الفئات -->
+                    <div class="settings-section" id="categories">
+                        <h2 class="settings-section-title"><span class="material-icons-outlined">category</span> إدارة
+                            الفئات</h2>
+                        <p class="settings-section-desc">إضافة وتعديل وحذف فئات المنتجات</p>
+
+                        <div class="category-add-form">
+                            <h3><span class="material-icons-outlined">add_circle</span> إضافة فئة جديدة</h3>
+                            <div class="form-row">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label">الاسم بالعربية *</label>
+                                    <input type="text" class="form-input" id="newCategoryNameAr"
+                                        placeholder="مثال: ثياب فاخرة">
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label">الاسم بالإنجليزية</label>
+                                    <input type="text" class="form-input" id="newCategoryNameEn"
+                                        placeholder="Luxury Thobes">
+                                </div>
+                            </div>
+                            <button class="btn-admin btn-admin-primary" style="margin-top:1rem;"
+                                onclick="addCategory()">
+                                <span class="material-icons-outlined">add</span> إضافة الفئة
+                            </button>
+                        </div>
+
+                        <h3 style="font-size:1rem;font-weight:600;margin-bottom:1rem;">الفئات الحالية</h3>
+                        <div id="categoriesList">
+                            <div style="text-align:center;padding:2rem;color:var(--admin-muted);">
+                                <span class="material-icons-outlined"
+                                    style="animation:spin 1s linear infinite;">sync</span>
+                                جاري التحميل...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: إدارة أسعار الولايات -->
+    <div class="modal-overlay" id="wilayasModal">
+        <div class="modal-container" style="max-width:700px;">
+            <div class="modal-header">
+                <h2><span class="material-icons-outlined" style="color:var(--admin-accent);">local_shipping</span>
+                    أسعار الشحن لكل ولاية</h2>
+                <button class="modal-close" onclick="closeModal('wilayasModal')"><span
+                        class="material-icons-outlined">close</span></button>
+            </div>
+            <div class="modal-body" style="max-height:60vh;overflow-y:auto;">
+                <div style="margin-bottom:1rem;display:flex;gap:0.75rem;align-items:center;">
+                    <input type="number" class="form-input" id="bulkPrice" placeholder="سعر موحّد لجميع الولايات"
+                        style="flex:1;">
+                    <button class="btn-admin btn-admin-outline" onclick="applyBulkPrice()" style="white-space:nowrap;">
+                        <span class="material-icons-outlined">content_copy</span> تطبيق على الكل
+                    </button>
+                </div>
+                <div id="wilayasList" style="display:flex;flex-direction:column;gap:0.5rem;">
+                    <div style="text-align:center;padding:2rem;color:var(--admin-muted);">
+                        <span class="material-icons-outlined" style="animation:spin 1s linear infinite;">sync</span>
+                        جاري التحميل...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-admin btn-admin-outline" onclick="closeModal('wilayasModal')">إلغاء</button>
+                <button class="btn-admin btn-admin-primary" id="saveWilayasBtn" onclick="saveWilayasBulk()">
+                    <span class="material-icons-outlined">save</span> حفظ جميع الأسعار
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: إضافة مستخدم -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal-container" style="max-width:500px;">
+            <div class="modal-header">
+                <h2><span class="material-icons-outlined" style="color:var(--admin-accent);">person_add</span> إضافة
+                    مستخدم</h2>
+                <button class="modal-close" onclick="closeModal('userModal')"><span
+                        class="material-icons-outlined">close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label class="form-label">الاسم الكامل</label><input type="text"
+                        class="form-input" id="au-name" placeholder="أحمد بن علي"></div>
+                <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email"
+                        class="form-input" id="au-email" placeholder="ahmed@elfakher.dz"></div>
+                <div class="form-group"><label class="form-label">كلمة المرور</label><input type="password"
+                        class="form-input" id="au-password" placeholder="********"></div>
+                <div class="form-group">
+                    <label class="form-label">الصلاحيات</label>
+                    <select class="form-input" id="au-role">
+                        <option>مدير النظام - صلاحيات كاملة</option>
+                        <option>إدارة الطلبات فقط</option>
+                        <option>إدارة المنتجات فقط</option>
+                        <option>عرض فقط</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-admin btn-admin-outline" onclick="closeModal('userModal')">إلغاء</button>
+                <button class="btn-admin btn-admin-primary" onclick="saveUser()"><span
+                        class="material-icons-outlined">save</span> حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: تعديل فئة -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal-container" style="max-width:500px;">
+            <div class="modal-header">
+                <h2><span class="material-icons-outlined" style="color:var(--admin-accent);">edit</span> تعديل
+                    الفئة</h2>
+                <button class="modal-close" onclick="closeModal('categoryModal')"><span
+                        class="material-icons-outlined">close</span></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editCategoryId">
+                <div class="form-group"><label class="form-label">الاسم بالعربية *</label><input type="text"
+                        class="form-input" id="editCategoryNameAr"></div>
+                <div class="form-group"><label class="form-label">الاسم بالإنجليزية</label><input type="text"
+                        class="form-input" id="editCategoryNameEn"></div>
+                <div class="form-group"><label class="form-label">الترتيب</label><input type="number" class="form-input"
+                        id="editCategorySortOrder" min="0"></div>
+                <div class="toggle-switch">
+                    <div>
+                        <div class="toggle-label">الفئة نشطة</div>
+                        <div class="toggle-desc">تظهر للعملاء في الواجهة</div>
+                    </div>
+                    <div class="toggle active" id="editCategoryActive" onclick="this.classList.toggle('active')"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-admin btn-admin-outline" onclick="closeModal('categoryModal')">إلغاء</button>
+                <button class="btn-admin btn-admin-primary" onclick="saveCategory()"><span
+                        class="material-icons-outlined">save</span> حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: var(--admin-surface);
+            border-radius: 1rem;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.3s cubic-bezier(.4, 0, .2, 1) both;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--admin-border);
+        }
+
+        .modal-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--admin-muted);
+            border-radius: 0.375rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--admin-border);
+            background: var(--admin-bg);
+            border-radius: 0 0 1rem 1rem;
+        }
+    </style>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Mobile Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        // ========== Auth Fetch Helper ==========
+        function getAuthHeaders() {
+            const token = localStorage.getItem('elfakher_token');
+            return token ? { 'Authorization': `Bearer ${token}` } : {};
+        }
+        async function authFetch(url, options = {}) {
+            const authHeaders = getAuthHeaders();
+            options.headers = { ...authHeaders, ...(options.headers || {}) };
+            const res = await fetch(url, options);
+            if (res.status === 401) { window.location.href = '/admin/login.html'; throw new Error('Unauthorized'); }
+            return res;
+        }
+
+        // ========== Toast Notifications ==========
+        function ensureToastContainer() {
+            if (!document.querySelector('.toast-container')) {
+                const c = document.createElement('div');
+                c.className = 'toast-container';
+                document.body.appendChild(c);
+            }
+        }
+        function showToast(message, type = 'success') {
+            ensureToastContainer();
+            const container = document.querySelector('.toast-container');
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<span class="material-icons-outlined">${icon}</span>${message}<button class="toast-close" onclick="this.parentElement.remove()"><span class="material-icons-outlined" style="font-size:1rem;">close</span></button>`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.add('toast-out'); setTimeout(() => toast.remove(), 300); }, 3500);
+        }
+        ensureToastContainer();
+
+        // Tab Navigation
+        document.querySelectorAll('.settings-nav-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.section).classList.add('active');
+            });
+        });
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
+        function openUserModal() { openModal('userModal'); }
+        function saveUser() {
+            const name = document.getElementById('au-name').value.trim();
+            const email = document.getElementById('au-email').value.trim();
+            const password = document.getElementById('au-password').value;
+            const role = document.getElementById('au-role').value;
+            if (!name || !email || !password) {
+                showToast('الرجاء ملء جميع الحقول', 'error');
+                return;
+            }
+            showToast('تم إضافة المستخدم بنجاح');
+            closeModal('userModal');
+        }
+
+        // Close modal on outside click
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function (e) { if (e.target === this) closeModal(this.id); });
+        });
+
+        // Logo upload preview
+        document.getElementById('logoInput').addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => document.querySelector('#logoPreview img').src = e.target.result;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // ================= Settings (Store Info) =================
+        const settingsFields = {
+            'store_name': 'storeName',
+            'store_email': 'storeEmail',
+            'store_phone': 'storePhone',
+            'whatsapp_number': 'storeWhatsapp',
+            'store_address': 'storeAddress',
+            'store_description': 'storeDesc',
+            'social_facebook': 'storeFacebook',
+            'social_instagram': 'storeInstagram',
+            'social_tiktok': 'storeTiktok'
+        };
+
+        async function loadSettings() {
+            try {
+                const res = await authFetch('/api/settings');
+                const data = await res.json();
+                if (data.success) {
+                    for (const [key, elementId] of Object.entries(settingsFields)) {
+                        const el = document.getElementById(elementId);
+                        if (el && data.data[key]) {
+                            el.value = data.data[key];
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading settings:', err);
+            }
+        }
+
+        async function saveSettings() {
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-icons-outlined" style="animation:spin 1s linear infinite;">sync</span> جاري الحفظ...';
+
+            try {
+                const promises = [];
+                for (const [key, elementId] of Object.entries(settingsFields)) {
+                    const el = document.getElementById(elementId);
+                    if (el) {
+                        promises.push(
+                            authFetch(`/api/settings/${key}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ value: el.value })
+                            })
+                        );
+                    }
+                }
+                await Promise.all(promises);
+
+                btn.innerHTML = '<span class="material-icons-outlined">check</span> تم الحفظ!';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }, 1500);
+            } catch (err) {
+                console.error('Error saving settings:', err);
+                showToast('فشل في حفظ الإعدادات', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // Load settings on page load
+        loadSettings();
+
+        // ================= Wilayas (Shipping) =================
+        let allWilayas = [];
+
+        async function openWilayasModal() {
+            openModal('wilayasModal');
+            await loadWilayas();
+        }
+
+        async function loadWilayas() {
+            const container = document.getElementById('wilayasList');
+            try {
+                const res = await authFetch('/api/settings/shipping/wilayas');
+                const data = await res.json();
+                if (data.success) {
+                    allWilayas = data.data;
+                    renderWilayas();
+                } else {
+                    container.innerHTML = '<div style="color:#EF4444;padding:1rem;">فشل في تحميل الولايات</div>';
+                }
+            } catch (err) {
+                console.error('Error loading wilayas:', err);
+                container.innerHTML = '<div style="color:#EF4444;padding:1rem;">حدث خطأ في الاتصال</div>';
+            }
+        }
+
+        function renderWilayas() {
+            const container = document.getElementById('wilayasList');
+            container.innerHTML = allWilayas.map(w => `
+                <div class="wilaya-row">
+                    <span class="wilaya-code">${w.code}</span>
+                    <span class="wilaya-name">${w.name_ar}</span>
+                    <div class="wilaya-price-wrap">
+                        <input type="number" class="form-input wilaya-price" data-id="${w.id}" 
+                            value="${w.shipping_cost || 0}" min="0" step="50">
+                        <span>دج</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyBulkPrice() {
+            const price = document.getElementById('bulkPrice').value;
+            if (!price || isNaN(price)) {
+                showToast('الرجاء إدخال سعر صالح', 'error');
+                return;
+            }
+            document.querySelectorAll('.wilaya-price').forEach(input => {
+                input.value = price;
+            });
+        }
+
+        async function saveWilayasBulk() {
+            const btn = document.getElementById('saveWilayasBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-icons-outlined" style="animation:spin 1s linear infinite;">sync</span> جاري الحفظ...';
+
+            const wilayas = [];
+            document.querySelectorAll('.wilaya-price').forEach(input => {
+                wilayas.push({
+                    id: input.dataset.id,
+                    shipping_cost: parseFloat(input.value) || 0
+                });
+            });
+
+            try {
+                const res = await authFetch('/api/settings/shipping/wilayas/bulk', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ wilayas })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    btn.innerHTML = '<span class="material-icons-outlined">check</span> تم الحفظ!';
+                    setTimeout(() => {
+                        closeModal('wilayasModal');
+                        btn.disabled = false;
+                        btn.innerHTML = '<span class="material-icons-outlined">save</span> حفظ جميع الأسعار';
+                    }, 1000);
+                } else {
+                    showToast(data.message || 'فشل في الحفظ', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<span class="material-icons-outlined">save</span> حفظ جميع الأسعار';
+                }
+            } catch (err) {
+                console.error('Error saving wilayas:', err);
+                showToast('حدث خطأ أثناء الحفظ', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-icons-outlined">save</span> حفظ جميع الأسعار';
+            }
+        }
+
+        // ================= Categories Management =================
+        let allCategories = [];
+
+        async function loadCategories() {
+            const container = document.getElementById('categoriesList');
+            try {
+                const res = await authFetch('/api/products/categories');
+                const data = await res.json();
+                if (data.success) {
+                    allCategories = data.data;
+                    renderCategories();
+                } else {
+                    container.innerHTML = '<div style="color:#EF4444;padding:1rem;">فشل في تحميل الفئات</div>';
+                }
+            } catch (err) {
+                console.error('Error loading categories:', err);
+                container.innerHTML = '<div style="color:#EF4444;padding:1rem;">حدث خطأ في الاتصال</div>';
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesList');
+            if (allCategories.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--admin-muted);">لا توجد فئات حالياً</div>';
+                return;
+            }
+            container.innerHTML = allCategories.map(cat => `
+                <div class="zone-card" style="${!cat.is_active ? 'opacity:0.6;' : ''}">
+                    <div class="zone-info">
+                        <h4>${cat.name_ar}</h4>
+                        <p>${cat.name_en || '-'} | الترتيب: ${cat.sort_order}</p>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.5rem;">
+                        <span class="status-badge ${cat.is_active ? 'delivered' : 'cancelled'}" style="font-size:0.75rem;">
+                            ${cat.is_active ? 'نشط' : 'معطل'}
+                        </span>
+                        <button class="btn-admin-icon" onclick="openEditCategory('${cat.id}')" title="تعديل">
+                            <span class="material-icons-outlined">edit</span>
+                        </button>
+                        <button class="btn-admin-icon" onclick="deleteCategory('${cat.id}', '${cat.name_ar}')" title="حذف" style="color:#EF4444;">
+                            <span class="material-icons-outlined">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function addCategory() {
+            const nameAr = document.getElementById('newCategoryNameAr').value.trim();
+            const nameEn = document.getElementById('newCategoryNameEn').value.trim();
+
+            if (!nameAr) {
+                showToast('الرجاء إدخال الاسم بالعربية', 'error');
+                return;
+            }
+
+            try {
+                const res = await authFetch('/api/products/categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name_ar: nameAr, name_en: nameEn || null, sort_order: allCategories.length })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('newCategoryNameAr').value = '';
+                    document.getElementById('newCategoryNameEn').value = '';
+                    loadCategories();
+                    showToast('تم إضافة الفئة بنجاح');
+                } else {
+                    showToast(data.message || 'فشل في إضافة الفئة', 'error');
+                }
+            } catch (err) {
+                console.error('Error adding category:', err);
+                showToast('حدث خطأ أثناء الإضافة', 'error');
+            }
+        }
+
+        function openEditCategory(id) {
+            const cat = allCategories.find(c => c.id === id);
+            if (!cat) return;
+
+            document.getElementById('editCategoryId').value = id;
+            document.getElementById('editCategoryNameAr').value = cat.name_ar;
+            document.getElementById('editCategoryNameEn').value = cat.name_en || '';
+            document.getElementById('editCategorySortOrder').value = cat.sort_order;
+
+            const activeToggle = document.getElementById('editCategoryActive');
+            if (cat.is_active) {
+                activeToggle.classList.add('active');
+            } else {
+                activeToggle.classList.remove('active');
+            }
+
+            openModal('categoryModal');
+        }
+
+        async function saveCategory() {
+            const id = document.getElementById('editCategoryId').value;
+            const nameAr = document.getElementById('editCategoryNameAr').value.trim();
+            const nameEn = document.getElementById('editCategoryNameEn').value.trim();
+            const sortOrder = parseInt(document.getElementById('editCategorySortOrder').value) || 0;
+            const isActive = document.getElementById('editCategoryActive').classList.contains('active');
+
+            if (!nameAr) {
+                showToast('الرجاء إدخال الاسم بالعربية', 'error');
+                return;
+            }
+
+            try {
+                const res = await authFetch(`/api/products/categories/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name_ar: nameAr, name_en: nameEn || null, sort_order: sortOrder, is_active: isActive })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    closeModal('categoryModal');
+                    loadCategories();
+                    showToast('تم تحديث الفئة بنجاح');
+                } else {
+                    showToast(data.message || 'فشل في تحديث الفئة', 'error');
+                }
+            } catch (err) {
+                console.error('Error updating category:', err);
+                showToast('حدث خطأ أثناء التحديث', 'error');
+            }
+        }
+
+        async function deleteCategory(id, name) {
+            if (!confirm(`هل أنت متأكد من حذف الفئة "${name}"؟`)) return;
+
+            try {
+                const res = await authFetch(`/api/products/categories/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    loadCategories();
+                    showToast('تم حذف الفئة بنجاح');
+                } else {
+                    showToast(data.message || 'فشل في حذف الفئة', 'error');
+                }
+            } catch (err) {
+                console.error('Error deleting category:', err);
+                showToast('حدث خطأ أثناء الحذف', 'error');
+            }
+        }
+
+        // Load categories when section is shown
+        document.querySelector('[data-section="categories"]').addEventListener('click', loadCategories);
+    </script>
+</body>
+
+</html>

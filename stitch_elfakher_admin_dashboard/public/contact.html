@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا | الفاخر للقميص والثياب</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Colors - Premium Palette */
+            --bg: #F5F0EB;
+            --bg-card: #FFFFFF;
+            --bg-dark: #1A232E;
+            --bg-dark-light: #243040;
+
+            --primary: #C5A16F;
+            --primary-light: #D4B68C;
+            --accent: #121619;
+            --text-primary: #121619;
+            --text-secondary: #5C5F62;
+            --text-light: #94A3B8;
+            --border: #E5E7EB;
+            --border-light: #F3F4F6;
+            --success: #10B981;
+            --error: #EF4444;
+            
+            /* Shadows & Radius */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.08);
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 20px;
+            --radius-full: 999px;
+            
+            /* Typography */
+            --font-arabic: 'Cairo', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+        }
+
+        .dark {
+            --bg: #0F1419;
+            --bg-card: #1A232E;
+            --bg-dark: #0A0F14;
+            --bg-dark-light: #243040;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --text-light: #6B7280;
+            --border: #2D3A4A;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.4);
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: var(--font-arabic);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+
+        
+        
+        /* ========================================
+           HEADER & NAVIGATION (UNIFIED)
+           ======================================== */
+        .app-header {
+            position: sticky; top: 0; z-index: 999;
+            background: var(--bg); padding: 1rem 1.25rem;
+            transition: box-shadow 0.3s, background 0.3s;
+            border-bottom: none; /* User requirement: no borders */
+        }
+        .app-header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-row {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1280px; margin: 0 auto; width: 100%;
+        }
+
+        /* Mobile Greeting */
+        .store-greeting { display: flex; flex-direction: column; }
+        .store-greeting small { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+        .store-greeting h1 { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; letter-spacing: 0.02em; color: var(--text-primary); margin: 0; line-height: 1.2; }
+
+        /* Desktop Logo */
+        .header-logo { display: none; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .header-logo img { height: 2.75rem !important; width: auto !important; max-width: 100px; object-fit: contain; }
+        .header-logo-text { display: flex; flex-direction: column; }
+        .header-logo-text .brand-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+        .header-logo-text .brand-tag { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #C19A5B; }
+
+        /* Desktop Navigation */
+        .desktop-nav { display: none; align-items: center; gap: 1rem; }
+        .desktop-nav a {
+            text-decoration: none; font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary);
+            padding: 0.5rem 1.25rem; border-radius: var(--radius-full); transition: all 0.3s ease; background: transparent;
+        }
+        .desktop-nav a:hover { color: white; background: rgba(193, 154, 91, 0.7); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(193, 154, 91, 0.2); }
+        .desktop-nav a.active { color: var(--bg-card); background: #C19A5B; font-weight: 800; box-shadow: 0 4px 12px rgba(193, 154, 91, 0.3); }
+
+        /* Actions */
+        .header-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .icon-circle {
+            width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; background: var(--bg-card); color: var(--text-primary);
+            transition: all 0.2s; position: relative; text-decoration: none; cursor: pointer;
+        }
+        .icon-circle:hover { background: var(--bg-dark); color: white; border-color: var(--bg-dark); }
+        .icon-circle .material-icons-outlined { font-size: 1.375rem; }
+
+        /* Cart Badge */
+        .cart-count, .cart-badge {
+            position: absolute !important; top: -2px !important; right: -2px !important; 
+            min-width: 1.125rem !important; height: 1.125rem !important;
+            background: #C19A5B !important; color: white !important; 
+            font-size: 0.625rem !important; font-weight: 700 !important;
+            border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important;
+            border: none !important; margin: 0 !important; padding: 0 !important;
+        }
+
+        /* Desktop Header Layout Restraints */
+        @media (min-width: 768px) {
+            .app-header { padding: 1rem 2rem; }
+            .store-greeting { display: none !important; }
+            .header-logo { display: flex !important; }
+            .desktop-nav { display: flex !important; }
+            .header-actions { justify-content: flex-end; }
+        }
+        @media (min-width: 1024px) {
+            .app-header { padding: 1rem 3rem; }
+        }
+
+
+        /* ========================================
+           CONTACT SECTION (PREMIUM GLASSMORPHISM)
+           ======================================== */
+        .contact-hero { padding: 4rem 0 2rem; text-align: center; position: relative; z-index: 2; }
+        .contact-hero h1 { font-family: var(--font-serif); font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary); }
+        .contact-hero p { color: var(--text-secondary); font-size: 1.125rem; max-width: 600px; margin: 0 auto; }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-bottom: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .premium-glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark .premium-glass-card {
+            background: rgba(26, 35, 46, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .premium-glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+        .dark .premium-glass-card:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-info-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-icon-glass {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(197, 161, 111, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(197, 161, 111, 0.3);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover .info-icon-glass {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .info-content h3 { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .info-content p { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); }
+
+        .social-grid {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-glass-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+        }
+        
+        .dark .social-glass-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .social-glass-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: fill 0.3s ease;
+        }
+
+        .social-glass-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            color: white; 
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .social-fb:hover { background: #1877F2; }
+        .social-tt:hover { background: #000000; }
+        .social-ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-wa:hover { background: #25D366; }
+
+        .form-title { font-size: 1.75rem; margin-bottom: 2rem; font-family: var(--font-arabic); font-weight: 800; color: var(--text-primary); }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .input-group { position: relative; margin-bottom: 1.5rem; }
+
+        .form-label {
+            display: block; font-size: 0.875rem; font-weight: 700;
+            margin-bottom: 0.5rem; color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .premium-input {
+            width: 100%; padding: 1.25rem;
+            background: rgba(0, 0, 0, 0.02);
+            border: 2px solid transparent; border-radius: var(--radius);
+            color: var(--text-primary); font-family: inherit; font-size: 1rem; font-weight: 500;
+            transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .dark .premium-input { background: rgba(0, 0, 0, 0.2); color: white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+
+        .premium-input:focus {
+            outline: none; background: var(--bg-card); border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(197, 161, 111, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .input-group:focus-within .form-label { color: var(--primary); }
+        .premium-textarea { resize: vertical; min-height: 150px; }
+
+        .submit-btn {
+            width: 100%; padding: 1.25rem;
+            background: var(--primary); color: white;
+            border: none; border-radius: var(--radius);
+            font-size: 1.125rem; font-weight: 800;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            margin-top: 2rem; position: relative; overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg); transition: all 0.5s; opacity: 0;
+        }
+
+        .submit-btn:hover { background: var(--primary-light); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(197, 161, 111, 0.3); }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:hover::after { opacity: 1; left: 100%; }
+
+        @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr; gap: 3rem; } }
+        @media (max-width: 768px) {
+            .contact-hero h1 { font-size: 2.25rem; }
+            .premium-glass-card { padding: 2rem 1.5rem; border-radius: 20px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .social-grid { justify-content: space-between; gap: 0.5rem; }
+            .social-glass-btn { width: 3rem; height: 3rem; }
+        }
+
+        /* ========================================
+           BOTTOM NAV (INTERACTIVE)
+           ======================================== */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+            background: var(--bg-dark);
+            border-radius: var(--radius-xl, 20px) var(--radius-xl, 20px) 0 0;
+            padding: 0.75rem 1.5rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
+            display: flex; align-items: center; justify-content: space-around;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 0.25rem; padding: 0.5rem 1rem; border-radius: var(--radius, 12px);
+            transition: all 0.2s; color: rgba(255,255,255,0.5); position: relative; text-decoration: none;
+        }
+        .nav-item:hover { color: rgba(255,255,255,0.8); }
+        .nav-item.active { color: white; background: rgba(255,255,255,0.1); }
+        .nav-item .material-icons-outlined { font-size: 1.5rem; }
+        .nav-item .nav-label { font-size: 0.625rem; font-weight: 600; }
+
+        .nav-badge {
+            position: absolute; top: -5px; right: 20%;
+            background: var(--primary); color: white; font-size: 10px; font-weight: 800;
+            min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @media (min-width: 769px) {
+            .app-header .header-logo, .app-header .desktop-nav { display: flex; }
+            .app-header .store-greeting { display: none; }
+            .bottom-nav { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+            <!-- ======== HEADER ======== -->
+    <header class="app-header" id="appHeader">
+        <div class="header-row">
+            <!-- Mobile: Store Greeting -->
+            <div class="store-greeting">
+                <small>مرحباً بك في</small>
+                <h1>ELFAKHER</h1>
+            </div>
+
+            <!-- Desktop: Logo (Right RTL) -->
+            <a href="index.html" class="header-logo">
+                <img src="../assets/logo.png" alt="ELFAKHER">
+                <div class="header-logo-text">
+                    <span class="brand-name">ELFAKHER</span>
+                    <span class="brand-tag">Fabrics</span>
+                </div>
+            </a>
+
+            <!-- Desktop: Navigation (Center RTL) -->
+            <nav class="desktop-nav">
+                <a href="index.html" class="">الرئيسية</a>
+                <a href="products.html" class="">المنتجات</a>
+                <a href="contact.html" class="active">اتصل بنا</a>
+            </nav>
+
+            <!-- Actions (Left RTL) -->
+            <div class="header-actions">
+                
+                <button class="icon-circle" style="visibility: hidden;" aria-hidden="true" disabled>
+                    <span class="material-icons-outlined">search</span>
+                </button>
+                <a href="cart.html" class="icon-circle" aria-label="السلة">
+                    <span class="material-icons-outlined">shopping_bag</span>
+                    <span class="cart-count cart-badge" style="display:none;">0</span>
+                </a>
+                <button class="icon-circle" id="darkModeToggle" aria-label="الوضع المظلم">
+                    <span class="material-icons-outlined">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="contact-hero">
+            <div class="container">
+                <h1>تواصل معنا</h1>
+                <p>نحن هنا لخدمتك بأرقى مستوى. لا تتردد في طرح أي استفسار.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info Card -->
+                <div class="premium-glass-card contact-info-card">
+                    <div>
+                        <div class="form-title" style="margin-bottom: 3rem;">معلومات التواصل</div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon-glass">
+                                <span class="material-icons-outlined">location_on</span>
+                            </div>
+                            <div class="info-content">
+                                <h3>العنوان</h3>
+                                <p>شارع الأمير عبد القادر، الجزائر العاصمة</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon-glass">
+                                <span class="material-icons-outlined">phone_in_talk</span>
+                            </div>
+                            <div class="info-content">
+                                <h3>الهاتف (للتواصل السريع)</h3>
+                                <p dir="ltr">+213 555 123 456</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon-glass">
+                                <span class="material-icons-outlined">schedule</span>
+                            </div>
+                            <div class="info-content">
+                                <h3>ساعات العمل</h3>
+                                <p>السبت - الخميس: 9:00 ص - 6:00 م</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">الشبكات الاجتماعية</div>
+                        <div class="social-grid">
+                            <a href="#" class="social-glass-btn social-fb" title="Facebook">
+                                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                            <a href="#" class="social-glass-btn social-tt" title="TikTok">
+                                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.81-.6-4.03-1.37-.01 2.53-.01 5.07-.01 7.6 0 1.55-.37 3.15-1.19 4.45-1.17 1.88-3.41 2.86-5.55 2.69-2.07-.12-4.14-1.42-4.88-3.41-.83-1.94-.49-4.32 1.05-5.89 1.06-1.11 2.61-1.63 4.14-1.63v4.11c-.72.01-1.48.26-1.98.79-.53.53-.7 1.35-.49 2.06.27.87 1.33 1.32 2.15 1.04.57-.2.95-.73.95-1.33.01-2.93 0-5.86.01-8.8 0-3.56 0-7.11 0-10.67z"/></svg>
+                            </a>
+                            <a href="#" class="social-glass-btn social-ig" title="Instagram">
+                                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="https://wa.me/213555123456" class="social-glass-btn social-wa" title="WhatsApp">
+                                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807l.322.191c1.442.856 3.111 1.308 4.815 1.309 5.346 0 9.699-4.353 9.699-9.699s-4.353-9.698-9.699-9.698c-5.346 0-9.699 4.353-9.699 9.699 0 1.792.493 3.541 1.425 5.06l.211.344-.959 3.502 3.585-.94zm11.166-7.3c-.308-.154-1.82-.9-2.103-1.002-.284-.103-.49-.155-.697.154-.206.31-.798 1.002-.977 1.207-.179.206-.358.232-.666.077-.308-.154-1.3-.48-2.476-1.528-1.026-.826-1.503-1.742-1.708-2.05-.205-.308-.022-.475.132-.629.139-.138.308-.359.462-.538.154-.18.206-.308.308-.513.103-.206.052-.385-.026-.54-.076-.154-.697-1.68-.957-2.3-.253-.604-.511-.522-.697-.531l-.594-.01c-.206 0-.541.077-.824.385-.283.308-1.08 1.054-1.08 2.569s1.107 2.977 1.261 3.182c.154.205 2.178 3.327 5.277 4.664.737.318 1.312.508 1.76.65.74.236 1.413.203 1.945.124.593-.089 1.82-.744 2.077-1.463.257-.718.257-1.334.18-1.463-.077-.129-.283-.206-.591-.36zm0 0"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Card -->
+                <div class="premium-glass-card contact-form-card">
+                    <div class="form-title">أرسل رسالتك</div>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label class="form-label">الاسم الأول *</label>
+                                <input type="text" class="premium-input" name="firstname" placeholder="الاسم" required>
+                            </div>
+                            <div class="input-group">
+                                <label class="form-label">اللقب *</label>
+                                <input type="text" class="premium-input" name="lastname" placeholder="اللقب" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="form-label">رقم الهاتف *</label>
+                            <input type="tel" class="premium-input" name="phone" placeholder="مثال: 0550123456" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="form-label">طبيعة الاستفسار *</label>
+                            <select class="premium-input" name="subject" required style="cursor: pointer;">
+                                <option value="" disabled selected>يرجى الاختيار</option>
+                                <option>استفسار عن قماش</option>
+                                <option>طلب تفصيل مخصص</option>
+                                <option>متابعة طلب سابق</option>
+                                <option>خدمة العملاء</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="form-label">محتوى الرسالة *</label>
+                            <textarea class="premium-input premium-textarea" name="message" placeholder="اكتب تفاصيل رسالتك هنا بكل وضوح..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitContact">
+                            <span>إرسال الرسالة</span>
+                            <span class="material-icons-outlined">send</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ======== BOTTOM NAV (INTERACTIVE & UNIFIED) ======== -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="material-icons-outlined">home</span>
+            <span class="nav-label">الرئيسية</span>
+        </a>
+        <a href="products.html" class="nav-item">
+            <span class="material-icons-outlined">grid_view</span>
+            <span class="nav-label">التصنيفات</span>
+        </a>
+        <a href="cart.html" class="nav-item">
+            <span class="material-icons-outlined">shopping_bag</span>
+            <span class="nav-label">السلة</span>
+            <span class="nav-badge cart-badge" style="display:none;">0</span>
+        </a>
+        <a href="contact.html" class="nav-item active">
+            <span class="material-icons-outlined">call</span>
+            <span class="nav-label">اتصل بنا</span>
+        </a>
+    </nav>
+    <div style="height: 80px;"></div> <!-- Spacer for mobile bottom nav -->
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Additional UI logic if required, e.g., dark mode logo invert script.
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if(mutation.attributeName === "class") {
+                    const logos = document.querySelectorAll('.dark-invert');
+                    const isDark = document.documentElement.classList.contains('dark');
+                    logos.forEach(logo => {
+                        logo.style.filter = isDark ? 'brightness(0) invert(1)' : 'brightness(0) saturate(100%) invert(14%) sepia(21%) saturate(541%) hue-rotate(167deg) brightness(93%) contrast(92%)';
+                    });
+                }
+            });
+        });
+        observer.observe(document.documentElement, {attributes: true});
+        
+        // Init state check for logo
+        if(document.documentElement.classList.contains('dark')) {
+             document.querySelectorAll('.dark-invert').forEach(logo => {
+                  logo.style.filter = 'brightness(0) invert(1)';
+             });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل المقاسات | ELFAKHER Fabrics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .guide-section {
+            padding: 4rem 0;
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .size-table th,
+        .size-table td {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .size-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .dark .size-table th {
+            background: #0D1117;
+        }
+
+        .size-table tr:hover {
+            background: rgba(193, 154, 91, 0.05);
+        }
+
+        .how-to-measure {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+            align-items: center;
+        }
+
+        .measure-steps {
+            counter-reset: step;
+        }
+
+        .measure-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .measure-step::before {
+            counter-increment: step;
+            content: counter(step);
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .measure-image {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .measure-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .tips-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .tip-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .tip-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .how-to-measure {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo"><img src="../assets/logo.png" alt="ELFAKHER">
+                    <div class="logo-text"><span class="brand">ELFAKHER</span><span class="tagline">Fabrics</span></div>
+                </a>
+                <nav class="nav"><a href="index.html" class="nav-link">الرئيسية</a><a href="products.html"
+                        class="nav-link">القميص</a><a
+                        href="about.html" class="nav-link">من نحن</a><a href="contact.html" class="nav-link">اتصل
+                        بنا</a></nav>
+                <div class="nav-icons"><a href="cart.html" class="icon-btn" style="position:relative;"><span
+                            class="material-icons-outlined">shopping_bag</span></a><button class="icon-btn"
+                        id="darkModeToggle"><span class="material-icons-outlined">dark_mode</span></button></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="guide-section">
+        <div class="container">
+            <div class="guide-header">
+                <h1 style="font-size: 2.5rem;">دليل المقاسات</h1>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">اختر المقاس المناسب لك بدقة</p>
+            </div>
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>المقاس</th>
+                        <th>الطول (سم)</th>
+                        <th>محيط الصدر (سم)</th>
+                        <th>الكتف (سم)</th>
+                        <th>طول الكم (سم)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>52</strong></td>
+                        <td>130</td>
+                        <td>108</td>
+                        <td>48</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td><strong>54</strong></td>
+                        <td>135</td>
+                        <td>112</td>
+                        <td>50</td>
+                        <td>62</td>
+                    </tr>
+                    <tr>
+                        <td><strong>56</strong></td>
+                        <td>140</td>
+                        <td>116</td>
+                        <td>52</td>
+                        <td>64</td>
+                    </tr>
+                    <tr>
+                        <td><strong>58</strong></td>
+                        <td>145</td>
+                        <td>120</td>
+                        <td>54</td>
+                        <td>66</td>
+                    </tr>
+                    <tr>
+                        <td><strong>60</strong></td>
+                        <td>150</td>
+                        <td>124</td>
+                        <td>56</td>
+                        <td>68</td>
+                    </tr>
+                    <tr>
+                        <td><strong>62</strong></td>
+                        <td>155</td>
+                        <td>128</td>
+                        <td>58</td>
+                        <td>70</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="how-to-measure">
+                <div>
+                    <h2 style="margin-bottom: 2rem;">كيف تأخذ مقاساتك؟</h2>
+                    <div class="measure-steps">
+                        <div class="measure-step">
+                            <div><strong>الطول الكامل</strong>
+                                <p style="color:var(--text-muted);font-size:0.875rem;margin-top:0.25rem;">قس من أعلى
+                                    الكتف حتى أسفل الثوب المرغوب</p>
+                            </div>
+                        </div>
+                        <div class="measure-step">
+                            <div><strong>محيط الصدر</strong>
+                                <p style="color:var(--text-muted);font-size:0.875rem;margin-top:0.25rem;">لف شريط القياس
+                                    حول أعرض جزء من الصدر</p>
+                            </div>
+                        </div>
+                        <div class="measure-step">
+                            <div><strong>عرض الكتف</strong>
+                                <p style="color:var(--text-muted);font-size:0.875rem;margin-top:0.25rem;">قس من نهاية
+                                    الكتف الأيسر إلى نهاية الكتف الأيمن</p>
+                            </div>
+                        </div>
+                        <div class="measure-step">
+                            <div><strong>طول الكم</strong>
+                                <p style="color:var(--text-muted);font-size:0.875rem;margin-top:0.25rem;">قس من نهاية
+                                    الكتف حتى الرسغ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="measure-image"><img
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoZxLstYQKx6t7Y9cMGPb9rQk0HElIwpUdnM0tQLQqaULINxRw1zA7UvbIv1Sv-l_pEwk4j5OiQS-wPBmcrD2JdL8gLjquJ6uVVWx96SabH1l14UGpVarIFBjntvCJsNs30Ujz3Z6RqICH0sYceUz-Fcw4vNP-EIr4b0hWqD5MD-opy-nGmAxUnzH_VTI7JYNhFw7avmqvWBmIu_zYSiNEDkgN71q2Fffh971RcrHd7i7giWr0lF3YGAYUzWtrVTooelZHqRqGvF2u"
+                        alt="كيفية القياس"></div>
+            </div>
+            <div class="tips-section">
+                <h3 style="text-align: center;">نصائح مهمة</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon"><span class="material-icons-outlined">checkroom</span></div>
+                        <h4>البس ملابس خفيفة</h4>
+                        <p style="font-size:0.875rem;color:var(--text-muted);margin-top:0.5rem;">خذ المقاسات وأنت ترتدي
+                            ملابس خفيفة</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon"><span class="material-icons-outlined">straighten</span></div>
+                        <h4>استخدم شريط قياس</h4>
+                        <p style="font-size:0.875rem;color:var(--text-muted);margin-top:0.5rem;">شريط القياس المرن يعطي
+                            نتائج أدق</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon"><span class="material-icons-outlined">support_agent</span></div>
+                        <h4>تواصل معنا</h4>
+                        <p style="font-size:0.875rem;color:var(--text-muted);margin-top:0.5rem;">لست متأكداً؟ تواصل معنا
+                            للمساعدة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2024 ELFAKHER Fabrics. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/213555123456" class="whatsapp-btn" target="_blank"><svg fill="currentColor"
+            viewBox="0 0 24 24">
+            <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z" />
+        </svg></a>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
+
