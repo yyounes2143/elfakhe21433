@@ -342,6 +342,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS update_inventory_level ON catalog.inventory;
 CREATE TRIGGER update_inventory_level
     BEFORE INSERT OR UPDATE ON catalog.inventory
     FOR EACH ROW EXECUTE FUNCTION catalog.update_stock_level();
