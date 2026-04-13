@@ -8,33 +8,17 @@ async function executeSqlFile(filePath) {
     try {
         const sqlContent = fs.readFileSync(fullPath, 'utf8');
 
-        // Split the file into individual statements.
-        // A single failing statement (e.g. "table exists") shouldn't stop the whole file.
-        // This regex splits on ';' but only if it's not inside a PL/pgSQL DO $$ block or a string.
-        // Since we are restoring original files, we will split simply and catch errors per statement.
-
-        // To be completely safe with complex SQL, we'll try to run the whole file first.
         try {
             await pool.query(sqlContent);
             console.log(`✓ Successfully executed ${filePath}`);
         } catch (err) {
-            // If the whole file fails, we fall back to splitting it up and executing statement by statement.
-            // This ensures subsequent tables/inserts in the same file still execute if earlier ones exist.
             console.log(`Executing ${filePath} statement by statement due to conflicts...`);
-
-            // Simple split by ';' at the end of lines
             const statements = sqlContent.split(/;\s*$/m).filter(s => s.trim().length > 0);
 
             for (let stmt of statements) {
                 try {
                     await pool.query(stmt);
                 } catch (stmtErr) {
-                    // Ignore common idempotency errors: duplicate table/index/type, unique violation, etc.
-                    // 42P07: duplicate_table
-                    // 42710: duplicate_object (including triggers)
-                    // 23505: unique_violation
-                    // 42712: duplicate_alias
-                    // 42704: undefined_object
                     if (!['42P07', '42710', '23505', '42712', '42704'].includes(stmtErr.code)) {
                          console.warn(`Warning executing statement in ${filePath}:`, stmtErr.message);
                     }
@@ -66,13 +50,11 @@ async function initDB() {
             try {
                 await executeSqlFile(file);
             } catch (err) {
-                console.warn(`! Skipped or failed part of ${file} (likely already initialized). Continuing...`);
+                console.warn(`! Skipped or failed part of ${file}. Continuing...`);
             }
         }
 
         console.log('>>> Seeding default admin user...');
-        // The core.users table was dropped/restored and might not have the phone constraint if it failed earlier.
-        // We use a safe check and insert to guarantee the admin user is seeded regardless of conflicts.
         const adminCheck = await pool.query('SELECT id FROM core.users WHERE phone = $1', ['0540107528']);
 
         if (adminCheck.rows.length > 0) {

@@ -13,7 +13,7 @@ function initDarkMode() {
     // Check saved preference or system preference
     const savedTheme = localStorage.getItem('theme');
     const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
+
     if (isDark) {
         document.documentElement.classList.add('dark');
     } else {
@@ -77,16 +77,16 @@ document.addEventListener('click', function(e) {
     if (toggleBtn) {
         e.preventDefault();
         const dropdown = toggleBtn.closest('.dropdown');
-        
+
         // Close other open dropdowns
         document.querySelectorAll('.dropdown.active').forEach(d => {
             if (d !== dropdown) d.classList.remove('active');
         });
-        
+
         dropdown.classList.toggle('active');
         return;
     }
-    
+
     // Close dropdowns when clicking outside
     if (!e.target.closest('.dropdown-menu')) {
         document.querySelectorAll('.dropdown.active').forEach(d => {
@@ -276,7 +276,7 @@ if (!window.cart) {
                                 <button class="qty-btn" onclick="cart.updateQuantity(${index}, ${item.quantity - 1})">
                                     <span class="material-icons-outlined" style="font-size: 1.25rem;">remove</span>
                                 </button>
-                                <input type="number" class="qty-input" value="${item.quantity}" min="1" 
+                                <input type="number" class="qty-input" value="${item.quantity}" min="1"
                                     onchange="cart.updateQuantity(${index}, parseInt(this.value))">
                                 <button class="qty-btn" onclick="cart.updateQuantity(${index}, ${item.quantity + 1})">
                                     <span class="material-icons-outlined" style="font-size: 1.25rem;">add</span>
@@ -859,30 +859,8 @@ function formatPrice(price) {
 // ========== Initialize Everything ==========
 
 function initAuth() {
-    // Only apply to admin pages
-    if (!window.location.pathname.includes('/admin/') || window.location.pathname.includes('login.html')) {
-        return;
-    }
-
-    const token = localStorage.getItem('elfakher_token');
-
-    if (!token) {
-        window.location.href = '/admin/login.html';
-        return;
-    }
-
-    // Verify token validity
-    fetch('/api/auth/verify', {
-        headers: { 'Authorization': `Bearer ${token}` }
-    }).then(res => {
-        if (!res.ok) {
-            localStorage.removeItem('elfakher_token');
-            localStorage.removeItem('elfakher_user');
-            window.location.href = '/admin/login.html';
-        }
-    }).catch(err => {
-        console.error('Auth check error:', err);
-    });
+    // إيقاف التوجيه لصفحة تسجيل الدخول تماماً (بناءً على طلب المطور)
+    return;
 }
 
 function logout() {
@@ -948,15 +926,15 @@ if (!document.getElementById('main-notification-styles')) {
         z-index: 1000;
         font-family: inherit;
     }
-    
+
     .cart-notification.show {
         transform: translateX(0);
     }
-    
+
     .cart-notification .material-icons-outlined {
         color: #10B981;
     }
-    
+
     .filter-option input:checked + span,
     .filter-option:has(input:checked) {
         font-weight: 600;
@@ -964,4 +942,3 @@ if (!document.getElementById('main-notification-styles')) {
 `;
     document.head.appendChild(notificationStyles);
 }
-
